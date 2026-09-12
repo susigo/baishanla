@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>拜山啦 · 界面线框 A/0</title>
+<style>
+  :root {
+    --bg: #e8e4dc;
+    --paper: #f7f3ea;
+    --line: #2f3a36;
+    --muted: #6b776f;
+    --fill: #dfe8e3;
+    --accent: #7baf9e;
+    --pink: #e7b8b0;
+    --white: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--line);
+  }
+  header.doc {
+    padding: 32px 40px 8px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  header.doc h1 { margin: 0 0 8px; font-size: 28px; font-weight: 600; }
+  header.doc p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .board {
+    display: grid;
+    grid-template-columns: repeat(4, 390px);
+    gap: 36px;
+    padding: 28px 40px 60px;
+    width: max-content;
+  }
+  .screen-wrap { width: 390px; }
+  .label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .label span {
+    display: inline-block;
+    background: var(--white);
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    padding: 2px 10px;
+    margin-right: 8px;
+    font-size: 12px;
+  }
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 36px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 8px 12px 0 rgba(47,58,54,0.08);
+  }
+  .notch {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--muted);
+    border-bottom: 1px dashed #c9c3b6;
+  }
+  .content {
+    height: calc(844px - 28px - 64px);
+    overflow: hidden;
+    padding: 12px 16px 8px;
+  }
+  .content.full { height: calc(844px - 28px); }
+  .tabbar {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 64px;
+    border-top: 2px solid var(--line);
+    background: var(--white);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    text-align: center;
+    font-size: 11px;
+  }
+  .tabbar .on { color: var(--accent); font-weight: 700; }
+  .tabbar div::before {
+    content: "";
+    display: block;
+    width: 18px; height: 18px;
+    margin: 0 auto 4px;
+    border: 1.5px solid currentColor;
+    border-radius: 5px;
+  }
+  .box {
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    background: var(--white);
+    padding: 12px;
+  }
+  .box.dashed { border-style: dashed; background: transparent; }
+  .box.fill { background: var(--fill); }
+  .box.accent { background: #e5f0eb; }
+  .box.pink { background: #f6e8e5; }
+  .hero-art {
+    height: 160px;
+    border: 1.5px dashed var(--accent);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 13px;
+    background: #eef5f1;
+    margin-bottom: 16px;
+  }
+  h2.t { font-size: 22px; margin: 8px 0; font-weight: 600; }
+  h3.t { font-size: 17px; margin: 0 0 8px; font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; line-height: 1.5; }
+  .btn {
+    height: 48px;
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 15px;
+    background: var(--accent);
+    color: #fff;
+    border-color: #5f9483;
+  }
+  .btn.secondary {
+    background: var(--white);
+    color: var(--line);
+    border-color: var(--line);
+  }
+  .btn.ghost {
+    background: transparent;
+    border-style: dashed;
+    color: var(--muted);
+  }
+  .stack { display: flex; flex-direction: column; gap: 10px; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .grow { flex: 1; }
+  .field {
+    height: 44px;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    color: var(--muted);
+    font-size: 14px;
+    background: var(--white);
+  }
+  .area {
+    min-height: 88px;
+    align-items: flex-start;
+    padding-top: 12px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    font-size: 12px;
+    background: var(--white);
+  }
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1.5px solid var(--line);
+    background: var(--pink);
+    flex-shrink: 0;
+  }
+  .avatar.sm { width: 24px; height: 24px; }
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px; font-size: 14px; font-weight: 600;
+  }
+  .grid3 {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  }
+  .thumb {
+    aspect-ratio: 1;
+    border: 1.5px dashed var(--muted);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--muted); background: #f0ebe0;
+  }
+  .check {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 2px solid var(--line); flex-shrink: 0;
+  }
+  .check.on { background: var(--accent); border-color: #5f9483; }
+  .anno {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .map {
+    height: 280px;
+    border: 1.5px solid var(--line);
+    border-radius: 16px;
+    background:
+      linear-gradient(#0000 49%, #c9c3b6 50%, #0000 51%),
+      linear-gradient(90deg, #0000 49%, #c9c3b6 50%, #0000 51%),
+      #e7efe9;
+    background-size: 40px 40px;
+    position: relative;
+  }
+  .pin {
+    position: absolute; left: 50%; top: 45%; transform: translate(-50%, -100%);
+    width: 18px; height: 18px; border-radius: 50% 50% 50% 0; transform-origin: center;
+    background: var(--pink); border: 2px solid var(--line);
+    transform: translate(-50%, -100%) rotate(-45deg);
+  }
+  .fab-note {
+    font-size: 11px; color: var(--muted); text-align: center; margin-top: 6px;
+  }
+  .progress {
+    height: 8px; border-radius: 999px; background: #e5e0d4; overflow: hidden;
+  }
+  .progress > i {
+    display: block; height: 100%; width: 60%; background: var(--accent);
+  }
+  .list-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 10px 0; border-bottom: 1px dashed #d5d0c4;
+  }
+  .year {
+    font-size: 12px; font-weight: 700; color: var(--accent);
+    margin: 8px 0 4px;
+  }
+</style>
+</head>
+<body>
+<header class="doc">
+  <h1>拜山啦 · 界面线框 A/0</h1>
+  <p>对应《产品方案-页面结构》《技术方案》P0 页面。线框级：结构 / 文案位 / 主操作。色块仅示意清明春意令牌，非高保真视觉。</p>
+</header>
+
+<div class="board">
+
+  <!-- A1 -->
+  <div class="screen-wrap">
+    <div class="label"><span>A1</span>欢迎页</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content full stack" style="padding-top:48px">
+        <div class="hero-art">插画占位 · 春山 / 新芽</div>
+        <h2 class="t" style="text-align:center">拜山啦</h2>
+        <p class="muted" style="text-align:center">把看望，轻轻记下来</p>
+        <div style="flex:1"></div>
+        <div class="btn">开始</div>
+        <div class="btn secondary">已有账号登录</div>
+        <p class="fab-note">安全区 · 主按钮高 48</p>
+      </div>
+    </div>
+    <p class="anno">目标：建立情绪与品牌，不堆功能。</p>
+  </div>
+
+  <!-- A2 -->
+  <div class="screen-wrap">
+    <div class="label"><span>A2</span>登录 · 手机号 OTP</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content full stack" style="padding-top:36px">
+        <div class="topbar"><span>←</span><span></span></div>
+        <h2 class="t">登录</h2>
+        <p class="muted">用手机号验证码进入家庭空间</p>
+        <div class="field">+86 手机号</div>
+        <div class="row">
+          <div class="field grow">验证码</div>
+          <div class="btn secondary" style="width:112px;height:44px;font-size:13px">获取验证码</div>
+        </div>
+        <div class="btn">进入</div>
+        <p class="muted">登录即表示同意《用户协议》与《隐私政策》</p>
+      </div>
+    </div>
+    <p class="anno">默认方案：短信 OTP。邮箱为备选。</p>
+  </div>
+
+  <!-- B1 -->
+  <div class="screen-wrap">
+    <div class="label"><span>B1</span>创建 / 加入家庭</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content full stack" style="padding-top:36px">
+        <h2 class="t">你的家庭空间</h2>
+        <p class="muted">墓地与记录都收在一个家里，方便一起协作。</p>
+        <div class="box accent stack">
+          <h3 class="t">创建家庭</h3>
+          <div class="field">家庭名称，如「小林家」</div>
+          <div class="btn">创建</div>
+        </div>
+        <div class="box dashed stack">
+          <h3 class="t">我有邀请</h3>
+          <div class="field">粘贴邀请码或打开邀请链接</div>
+          <div class="btn secondary">加入</div>
+        </div>
+      </div>
+    </div>
+    <p class="anno">首次强制二选一，避免无家庭空壳。</p>
+  </div>
+
+  <!-- C1 -->
+  <div class="screen-wrap">
+    <div class="label"><span>C1</span>首页</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content stack">
+        <div class="topbar">
+          <span>小林家 ▾</span>
+          <span class="chip">成员 4</span>
+        </div>
+        <div class="box accent">
+          <div class="muted">下一场拜山</div>
+          <h3 class="t" style="margin-top:6px">清明 · 4月4日</h3>
+          <div class="muted">青山公墓 · 负责人 妈妈</div>
+          <div class="row" style="margin-top:10px">
+            <span class="chip">提前 7 天</span>
+            <span class="chip">看排程</span>
+          </div>
+        </div>
+        <div class="btn">记一笔</div>
+        <div class="box">
+          <div class="row">
+            <strong class="grow">清明物资</strong>
+            <span class="muted">6/10</span>
+          </div>
+          <div class="progress" style="margin-top:8px"><i></i></div>
+        </div>
+        <div class="muted">最近记录</div>
+        <div class="box">
+          <div class="row"><div class="avatar sm"></div><strong class="grow">2025 清明</strong><span class="muted">青山</span></div>
+          <p class="muted" style="margin:6px 0 0">天气很好，大家一起去了…</p>
+        </div>
+        <div class="box">
+          <div class="row"><div class="avatar sm"></div><strong class="grow">忌日</strong><span class="muted">后山</span></div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="on">首页</div><div>墓地</div><div>记录</div><div>我的</div>
+      </div>
+    </div>
+    <p class="anno">主 CTA 唯一：记一笔。排程/清单不占 Tab。</p>
+  </div>
+
+  <!-- D1 -->
+  <div class="screen-wrap">
+    <div class="label"><span>D1</span>墓地列表</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content stack">
+        <div class="topbar"><span>墓地</span><span class="chip">+ 新建</span></div>
+        <div class="box stack" style="padding:0;overflow:hidden">
+          <div class="hero-art" style="height:96px;margin:0;border:none;border-radius:0">封面</div>
+          <div style="padding:12px">
+            <h3 class="t">青山公墓 A区</h3>
+            <p class="muted">纪念 · 祖父 祖母</p>
+            <p class="muted">下次 · 清明 4/4</p>
+          </div>
+        </div>
+        <div class="box stack" style="padding:0;overflow:hidden">
+          <div class="hero-art" style="height:96px;margin:0;border:none;border-radius:0;background:#f6e8e5;border-color:var(--pink);color:#c48980">封面</div>
+          <div style="padding:12px">
+            <h3 class="t">后山祖坟</h3>
+            <p class="muted">纪念 · 曾祖父</p>
+          </div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div>首页</div><div class="on">墓地</div><div>记录</div><div>我的</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- D3 -->
+  <div class="screen-wrap">
+    <div class="label"><span>D3</span>墓地详情</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content stack">
+        <div class="topbar"><span>←</span><span>⋯</span></div>
+        <div class="hero-art" style="height:120px">封面图</div>
+        <h2 class="t" style="margin-top:0">青山公墓 A区</h2>
+        <p class="muted">祖父 祖母 · 备注可写走哪条路、哪座碑</p>
+        <div class="row">
+          <div class="btn secondary grow" style="height:40px;font-size:13px">导航</div>
+          <div class="btn grow" style="height:40px;font-size:13px">记一笔</div>
+        </div>
+        <div class="row">
+          <div class="btn ghost grow" style="height:40px;font-size:13px">清单</div>
+          <div class="btn ghost grow" style="height:40px;font-size:13px">排程</div>
+        </div>
+        <div class="box">
+          <h3 class="t">近期记录</h3>
+          <div class="muted">2025 清明 · 2024 重阳</div>
+        </div>
+        <div class="box dashed">
+          <div class="muted">定位已保存 · 打开地图可微调</div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div>首页</div><div class="on">墓地</div><div>记录</div><div>我的</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- D4 -->
+  <div class="screen-wrap">
+    <div class="label"><span>D4</span>地图选点</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content full stack">
+        <div class="topbar"><span>← 定位</span><span class="chip">保存</span></div>
+        <div class="field">搜索地址 / 公墓名</div>
+        <div class="map"><div class="pin"></div></div>
+        <div class="box">
+          <strong>已选位置</strong>
+          <p class="muted" style="margin:6px 0 0">广东省 … 青山公墓附近<br/>坐标入库：WGS84</p>
+        </div>
+        <div class="btn secondary">用当前位置</div>
+      </div>
+    </div>
+    <p class="anno">高德展示；保存转 WGS84。</p>
+  </div>
+
+  <!-- E1 -->
+  <div class="screen-wrap">
+    <div class="label"><span>E1</span>记录时间线</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content stack">
+        <div class="topbar">
+          <span>记录</span>
+          <span class="chip">筛选 ▾</span>
+        </div>
+        <div class="year">2025</div>
+        <div class="box">
+          <div class="row"><strong class="grow">清明</strong><span class="muted">4/4</span></div>
+          <p class="muted">青山公墓 · 爸爸 发布</p>
+          <div class="grid3" style="margin-top:8px">
+            <div class="thumb"></div><div class="thumb"></div><div class="thumb"></div>
+          </div>
+        </div>
+        <div class="year">2024</div>
+        <div class="box">
+          <div class="row"><strong class="grow">重阳</strong><span class="muted">10/11</span></div>
+          <p class="muted">后山 · 妈妈 发布</p>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div>首页</div><div>墓地</div><div class="on">记录</div><div>我的</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E2 -->
+  <div class="screen-wrap">
+    <div class="label"><span>E2</span>记一笔</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content full stack">
+        <div class="topbar"><span>←</span><span>发布</span></div>
+        <div class="field">墓地 · 青山公墓 A区 ▾</div>
+        <div class="field">日期 · 今天</div>
+        <div class="field">标题（可选）</div>
+        <div class="field area">写几句想记下来的…</div>
+        <div class="muted">照片 / 视频</div>
+        <div class="grid3">
+          <div class="thumb">+</div>
+          <div class="thumb"></div>
+          <div class="thumb"></div>
+        </div>
+        <div class="box dashed row">
+          <div class="check"></div>
+          <span class="muted">同时打开本次物资清单</span>
+        </div>
+        <div class="btn">发布</div>
+      </div>
+    </div>
+    <p class="anno">默认墓地=上次；日期=今天。</p>
+  </div>
+
+  <!-- F2 -->
+  <div class="screen-wrap">
+    <div class="label"><span>F2</span>新建排程</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content full stack">
+        <div class="topbar"><span>←</span><span>保存</span></div>
+        <h2 class="t">排程</h2>
+        <div class="row">
+          <span class="chip">清明</span><span class="chip">重阳</span><span class="chip">忌日</span><span class="chip">自定义</span>
+        </div>
+        <div class="field">关联墓地 · 青山公墓 ▾</div>
+        <div class="field">日期规则 · 每年（配置表）</div>
+        <div class="field">提醒 · 提前 7 / 3 / 1 天</div>
+        <div class="field">负责人 · 妈妈 ▾</div>
+        <p class="muted">MVP：首页展示下一场；可导出 .ics。不做系统推送。</p>
+        <div class="btn">保存排程</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- G2 -->
+  <div class="screen-wrap">
+    <div class="label"><span>G2</span>本次物资清单</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content full stack">
+        <div class="topbar"><span>←</span><span>编辑</span></div>
+        <h2 class="t">2026 清明清单</h2>
+        <p class="muted">来自模板 · 青山公墓</p>
+        <div class="list-item">
+          <div class="check on"></div>
+          <div class="grow">
+            <strong>水果</strong>
+            <div class="muted">×1 份 · 妈妈 已勾</div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="check"></div>
+          <div class="grow">
+            <strong>香烛</strong>
+            <div class="muted">×1 套</div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="check"></div>
+          <div class="grow">
+            <strong>纸钱</strong>
+            <div class="muted">×2 刀 · 必备</div>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="check on"></div>
+          <div class="grow">
+            <strong>湿纸巾</strong>
+            <div class="muted">×1 · 爸爸 已勾</div>
+          </div>
+        </div>
+        <div class="btn secondary">从模板重置</div>
+      </div>
+    </div>
+    <p class="anno">勾选显示「谁 · 时间」。默认 Editor+ 可勾。</p>
+  </div>
+
+  <!-- B3 -->
+  <div class="screen-wrap">
+    <div class="label"><span>B3</span>成员与邀请</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content full stack">
+        <div class="topbar"><span>←</span><span></span></div>
+        <h2 class="t">家庭成员</h2>
+        <div class="box row">
+          <div class="avatar"></div>
+          <div class="grow"><strong>我</strong><div class="muted">所有者</div></div>
+        </div>
+        <div class="box row">
+          <div class="avatar"></div>
+          <div class="grow"><strong>妈妈</strong><div class="muted">编辑</div></div>
+          <span class="chip">改角色</span>
+        </div>
+        <div class="box row">
+          <div class="avatar"></div>
+          <div class="grow"><strong>表弟</strong><div class="muted">查看</div></div>
+        </div>
+        <div class="btn">复制邀请链接</div>
+        <p class="muted">链接 7 天有效 · 默认最多 10 次加入</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- H1 -->
+  <div class="screen-wrap">
+    <div class="label"><span>H1</span>我的</div>
+    <div class="phone">
+      <div class="notch">9:41</div>
+      <div class="content stack">
+        <div class="box row">
+          <div class="avatar" style="width:48px;height:48px"></div>
+          <div class="grow">
+            <h3 class="t" style="margin:0">昵称</h3>
+            <div class="muted">138****0000</div>
+          </div>
+        </div>
+        <div class="box">当前家庭 · 小林家 ▾</div>
+        <div class="box">成员与邀请</div>
+        <div class="box">导出日历 .ics</div>
+        <div class="box">关于拜山啦</div>
+        <div class="btn secondary">退出登录</div>
+      </div>
+      <div class="tabbar">
+        <div>首页</div><div>墓地</div><div>记录</div><div class="on">我的</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
