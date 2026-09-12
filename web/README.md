@@ -4,22 +4,20 @@
 
 **Slogan：** 把看望，轻轻记下来
 
-## Preview
+## Preview（验证 URL）
 
-**Public HTTPS：** https://baishanla-eva.surge.sh
+**Public HTTPS：** https://susigo.github.io/baishanla/
 
-（若链接暂不可用，见下方本地运行。）
+（Hash 路由，打开后为 `#/welcome`；可点「进入演示 · 小林家」。）
 
-## Repo
-
-https://github.com/susigo/baishanla
+Repo：https://github.com/susigo/baishanla
 
 ## Stack
 
-- React 19 + Vite + TypeScript + Tailwind CSS v4 + React Router
-- Persistence: `localStorage` single demo DB
-- Demo OTP: any phone, code `123456`
-- Seed family: **小林家**（可点「进入演示」）
+- React 19 + Vite + TypeScript + Tailwind CSS v4 + React Router（HashRouter）
+- Persistence: `localStorage` 单库演示
+- Demo OTP: 任意手机号，验证码 `123456`
+- Seed：家庭 **小林家**，2 座墓地、清明排程、物资清单、若干记录
 
 ## Local
 
@@ -29,7 +27,7 @@ npm install
 npm run dev
 ```
 
-Build:
+Build / preview:
 
 ```bash
 npm run build
@@ -38,23 +36,23 @@ npm run preview
 
 ## What works
 
-- Welcome / Login / Onboarding（创建或加入家庭）
-- 首页摘要：下一场排程、记一笔、物资进度、最近记录
-- 墓地列表 / 新建 / 详情 / 编辑；地图占位；导航打开高德 URL
-- 记录时间线 / 新建（图片 file → dataURL/objectURL）/ 详情
-- 排程列表与新建（从首页/墓地进入，无独立 Tab）
-- 物资清单勾选、编辑项、从模板重置
+- `/welcome` `/login` `/onboarding`（创建 / 加入家庭）
+- 首页：下一场排程、记一笔、物资进度、最近记录
+- 墓地列表 / 新建 / 详情 / 编辑；地图占位；「导航」打开高德 URL
+- 记录时间线 / 新建（图片 → dataURL 或 objectURL）/ 详情
+- 排程列表与新建（仅从首页/墓地进入，无独立 Tab）
+- 物资清单勾选、编辑、从模板重置
 - 我的 / 成员 / 复制邀请码
 - 底部 Tab 恰好 4：首页 / 墓地 / 记录 / 我的
+- PWA manifest + theme-color（无完整 SW）
 
-## Mocked / MVP limits
+## Mocked
 
 - 无真实短信；验证码固定 `123456`
-- 地图为占位网格，经纬度可手改
+- 地图为网格占位，经纬度可手改
 - 无后端；数据仅本机 localStorage
-- PWA：manifest + theme；未接完整 service worker
-- 图片大文件用 object URL（刷新后可能丢失）；小图 base64 持久化
+- 大图用 object URL（刷新可能丢）；小图 base64 可持久化
 
 ## Design tokens
 
-Cream `#F7F3EA` · Sage `#7BAF9E` · Blush `#E7B8B0` · Ink `#2F3A36` · max content 390px
+Cream `#F7F3EA` · Sage `#7BAF9E` · Blush `#E7B8B0` · Ink `#2F3A36` · max-width 390px
