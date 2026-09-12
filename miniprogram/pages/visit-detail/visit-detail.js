@@ -18,12 +18,12 @@ Page({
     this.refresh()
   },
   refresh() {
+    const family = store.currentFamily()
     const visit = this.id ? store.getVisit(this.id) : null
-    if (!visit) {
+    if (!visit || !store.belongsToFamily(visit, family.id)) {
       this.setData({ missing: true })
       return
     }
-    const family = store.currentFamily()
     const grave = store.getGrave(visit.graveId)
     this.setData({
       missing: false,

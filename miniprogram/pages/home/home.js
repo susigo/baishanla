@@ -32,7 +32,10 @@ Page({
     const occ = next && next.nextDate
     const grave = next && next.graveId ? store.getGrave(next.graveId) : null
     const lists = store.familyChecklists(family.id)
-    const list = lists[0]
+    let list = null
+    if (next && next.id) list = lists.find((c) => c.scheduleId === next.id) || null
+    if (!list && next && next.graveId) list = lists.find((c) => c.graveId === next.graveId) || null
+    if (!list) list = lists[0]
     const checked = list ? list.items.filter((i) => i.checked).length : 0
     const total = list ? list.items.length : 0
     const recent = store

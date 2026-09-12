@@ -1,5 +1,6 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
+const media = require('../../utils/media')
 
 Page({
   data: {
@@ -44,7 +45,12 @@ Page({
     }
   },
   onShow() {
-    auth.requireFamily()
+    if (!auth.requireFamily()) return
+    const family = store.currentFamily()
+    if (!store.canEditFamily(family.id)) {
+      wx.showToast({ title: '当前角色仅可查看', icon: 'none' })
+      setTimeout(() => wx.navigateBack({ fail: () => wx.switchTab({ url: '/pages/graves/graves' }) }), 400)
+    }
   },
   onName(e) {
     this.setData({ name: e.detail.value })
@@ -63,11 +69,14 @@ Page({
       count: 1,
       mediaType: ['image'],
       sourceType: ['album', 'camera'],
-      success: (res) => {
+      success: async (res) => {
         const f = (res.tempFiles || [])[0]
         if (!f) return
+        wx.showLoading({ title: '保存封面', mask: true })
+        const path = await media.persistLocalFile(f.tempFilePath)
+        wx.hideLoading()
         this.setData({
-          coverPath: f.tempFilePath,
+          coverPath: path,
           coverLabel: '相册封面',
         })
       },
@@ -121,6 +130,10 @@ Page({
       return
     }
     const family = store.currentFamily()
+    if (!store.canEditFamily(family.id)) {
+      wx.showToast({ title: '当前角色仅可查看', icon: 'none' })
+      return
+    }
     const g = store.saveGrave({
       id: this.id,
       familyId: family.id,
@@ -134,6 +147,10 @@ Page({
       coverPath: this.data.coverPath || '',
       coverMotif: this.data.coverMotif || 'sage',
     })
+    if (!g) {
+      wx.showToast({ title: '保存失败', icon: 'none' })
+      return
+    }
     wx.redirectTo({ url: '/pages/grave-detail/grave-detail?id=' + g.id })
   },
 })

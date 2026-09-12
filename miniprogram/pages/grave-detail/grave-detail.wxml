@@ -5,6 +5,7 @@
   <hills-art height="150" label="{{grave.coverLabel}}" cover-path="{{grave.coverPath}}" motif="{{grave.coverMotif}}" />
   <view class="h1 mt-3">{{grave.name}}</view>
   <view class="muted mt-2 sub">{{grave.memorialFor}} · {{noteShort}}</view>
+  <view wx:if="{{addressLine}}" class="muted addr">{{addressLine}}</view>
 
   <view class="grid-2 action-grid">
     <button class="pill secondary" bindtap="navigate">导航</button>

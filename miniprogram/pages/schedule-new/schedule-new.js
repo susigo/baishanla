@@ -57,7 +57,24 @@ Page({
     })
   },
   onType(e) {
-    this.setData({ typeIndex: Number(e.detail.value) })
+    const typeIndex = Number(e.detail.value)
+    const type = TYPES[typeIndex]
+    const y = Number(todayISO().slice(0, 4))
+    const patch = { typeIndex: typeIndex }
+    if (type === '清明') {
+      let d = y + '-04-04'
+      if (d < todayISO()) d = y + 1 + '-04-04'
+      patch.date = d
+      patch.ruleIndex = 0
+    } else if (type === '重阳') {
+      let d = y + '-10-11'
+      if (d < todayISO()) d = y + 1 + '-10-11'
+      patch.date = d
+      patch.ruleIndex = 0
+    } else if (type === '忌日') {
+      patch.ruleIndex = 0
+    }
+    this.setData(patch)
   },
   onCustom(e) {
     this.setData({ customTitle: e.detail.value })

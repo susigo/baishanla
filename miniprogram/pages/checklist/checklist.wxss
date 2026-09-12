@@ -14,7 +14,15 @@
 .item-name { font-weight: 600; font-size: 30rpx; }
 .item-name.done { color: #6B776F; text-decoration: line-through; text-decoration-color: #B7D0C4; }
 .caption { margin-top: 6rpx; font-size: 24rpx; }
-.item-row { padding: 28rpx 0; align-items: flex-start; }
+.item-row {
+  padding: 24rpx 28rpx;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 28rpx;
+  box-shadow: 0 12rpx 36rpx rgba(47, 58, 54, 0.05);
+  margin-bottom: 16rpx;
+  border-bottom: none;
+}
 .edit-row {
   display: flex;
   gap: 12rpx;

@@ -18,7 +18,7 @@
   <view class="relative" wx:else>
     <view class="card mb-3 body">
       <view class="ink bold mb-2">我们如何处理数据</view>
-      当前原型不上传账号到自有服务器。登录会话、家庭、墓地坐标、看望照片临时路径均保存在本机微信存储。重置演示数据或清除小程序缓存即可删除。
+      当前原型不上传账号到自有服务器。登录会话、家庭、墓地坐标、看望照片（本机用户目录）均保存在本机微信存储。重置演示数据或清除小程序缓存即可删除。
     </view>
     <view class="card mb-3 body">
       <view class="ink bold mb-2">权限说明</view>

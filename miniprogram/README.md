@@ -51,7 +51,7 @@ Repo：https://github.com/susigo/baishanla
 
 - 正式 `code2session` / 服务端会话与邀请校验
 - 订阅消息模板真推送
-- 照片对象存储 CDN（现为本地临时路径）
+- 照片对象存储 CDN（现为本机 USER_DATA 持久路径；跨设备同步下个迭代）
 - 短视频入库策略本期明确不做
 
 ## 颜色

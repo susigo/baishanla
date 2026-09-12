@@ -1,5 +1,6 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
+const media = require('../../utils/media')
 const { todayISO, formatMD } = require('../../utils/ids')
 
 const MAX_PHOTOS = 9
@@ -64,7 +65,7 @@ Page({
     }
     if (this.editId) {
       const v = store.getVisit(this.editId)
-      if (v) {
+      if (v && store.belongsToFamily(v, family.id)) {
         const gi = Math.max(0, graves.findIndex((g) => g.id === v.graveId))
         patch.graveIndex = gi
         patch.date = v.date
@@ -74,6 +75,10 @@ Page({
         patch.photos = (v.photos || []).slice()
         patch.editing = true
         wx.setNavigationBarTitle({ title: '编辑记录' })
+      } else if (v) {
+        wx.showToast({ title: '记录不属于当前家庭', icon: 'none' })
+        setTimeout(() => wx.navigateBack({ fail: () => wx.switchTab({ url: '/pages/visits/visits' }) }), 400)
+        return
       }
     }
     this.setData(patch)
@@ -117,7 +122,8 @@ Page({
         const paths = (res.tempFiles || []).map((f) => f.tempFilePath)
         const out = []
         for (let i = 0; i < paths.length; i++) {
-          out.push(await compressOne(paths[i]))
+          const compressed = await compressOne(paths[i])
+          out.push(await media.persistLocalFile(compressed))
         }
         wx.hideLoading()
         this.setData({ photos: this.data.photos.concat(out).slice(0, MAX_PHOTOS) })
@@ -168,6 +174,11 @@ Page({
       authorName: user.nickname,
     }
     const v = store.saveVisit(payload)
+    if (!v) {
+      this.setData({ publishing: false })
+      wx.showToast({ title: '保存失败', icon: 'none' })
+      return
+    }
     if (this.data.openList) {
       let lists = store.familyChecklists(family.id).filter((c) => c.graveId === grave.id)
       if (!lists.length) lists = store.familyChecklists(family.id)

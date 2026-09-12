@@ -34,7 +34,7 @@ Page({
   refresh() {
     const family = store.currentFamily()
     const list = this.id ? store.getChecklist(this.id) : null
-    if (!list) {
+    if (!list || !store.belongsToFamily(list, family.id)) {
       this.setData({ missing: true, templates: store.familyTemplates(family.id) })
       return
     }

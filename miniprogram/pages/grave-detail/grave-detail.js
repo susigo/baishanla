@@ -8,11 +8,13 @@ Page({
     missing: false,
     grave: {},
     noteShort: '',
+    addressLine: '',
     recentLabel: '',
     recentItems: [],
     locLabel: '',
     listId: '',
     schedules: [],
+    canEdit: false,
   },
   onLoad(q) {
     this.id = q.id
@@ -22,14 +24,15 @@ Page({
     this.refresh()
   },
   refresh() {
+    const family = store.currentFamily()
     const grave = this.id ? store.getGrave(this.id) : null
-    if (!grave) {
+    if (!grave || !store.belongsToFamily(grave, family.id)) {
       this.setData({ missing: true })
       return
     }
-    const visits = store.familyVisits(grave.familyId).filter((v) => v.graveId === grave.id)
-    const schedules = store.familySchedules(grave.familyId).filter((s) => s.graveId === grave.id)
-    const lists = store.familyChecklists(grave.familyId).filter((c) => c.graveId === grave.id)
+    const visits = store.familyVisits(family.id).filter((v) => v.graveId === grave.id)
+    const schedules = store.familySchedules(family.id).filter((s) => s.graveId === grave.id)
+    const lists = store.familyChecklists(family.id).filter((c) => c.graveId === grave.id)
     const recentItems = visits.slice(0, 3).map((v) => ({
       id: v.id,
       title: v.title || '看望',
@@ -40,6 +43,7 @@ Page({
       missing: false,
       grave: grave,
       noteShort: grave.note ? grave.note.slice(0, 28) : '可写走哪条路、哪座碑',
+      addressLine: grave.address || '',
       recentLabel: recentLabel || '暂无记录',
       recentItems: recentItems,
       locLabel: grave.lat != null ? '定位已保存 · 打开地图可微调' : '尚未定位 · 编辑时可添加',
@@ -49,9 +53,14 @@ Page({
           line: s.type + ' · ' + s.date + ' · ' + (s.assignee || ''),
         }),
       ),
+      canEdit: store.canEditFamily(family.id),
     })
   },
   goEdit() {
+    if (!this.data.canEdit) {
+      wx.showToast({ title: '当前角色仅可查看', icon: 'none' })
+      return
+    }
     wx.navigateTo({ url: '/pages/grave-edit/grave-edit?mode=edit&id=' + this.data.grave.id })
   },
   navigate() {
@@ -116,6 +125,10 @@ Page({
     })
   },
   moreActions() {
+    if (!this.data.canEdit) {
+      wx.showToast({ title: '当前角色仅可查看', icon: 'none' })
+      return
+    }
     wx.showActionSheet({
       itemList: ['编辑墓地', '新建排程'],
       success: (res) => {

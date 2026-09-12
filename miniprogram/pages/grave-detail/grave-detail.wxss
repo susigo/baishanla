@@ -39,3 +39,5 @@
 }
 .recent-line:last-child { border-bottom: none; }
 .sched { margin-top: 8rpx; line-height: 1.5; }
+
+.addr { margin-top: 8rpx; font-size: 24rpx; line-height: 1.5; }

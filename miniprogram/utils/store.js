@@ -429,8 +429,17 @@ function joinFamily(token) {
 
 function setCurrentFamily(id) {
   return mutate((db) => {
+    if (!db.sessionUserId || !id) return false
+    const ok = db.members.some((m) => m.familyId === id && m.userId === db.sessionUserId)
+    if (!ok) return false
     db.currentFamilyId = id
+    return true
   })
+}
+
+/** Entity must belong to the active family — prevents cross-family role/data leaks. */
+function belongsToFamily(entity, familyId) {
+  return !!(entity && familyId && entity.familyId === familyId)
 }
 
 function currentUser() {
@@ -503,10 +512,16 @@ function saveGrave(input) {
     if (input.id) {
       const idx = db.graves.findIndex((g) => g.id === input.id)
       if (idx >= 0) {
-        db.graves[idx] = Object.assign({}, db.graves[idx], input)
+        const prev = db.graves[idx]
+        if (db.currentFamilyId && prev.familyId !== db.currentFamilyId) return null
+        // never reassign familyId across households
+        const patch = Object.assign({}, input)
+        delete patch.familyId
+        db.graves[idx] = Object.assign({}, prev, patch, { familyId: prev.familyId })
         return db.graves[idx]
       }
     }
+    if (db.currentFamilyId && input.familyId && input.familyId !== db.currentFamilyId) return null
     const grave = {
       id: uid('g-'),
       familyId: input.familyId,
@@ -530,10 +545,16 @@ function saveVisit(input) {
     if (input.id) {
       const idx = db.visits.findIndex((v) => v.id === input.id)
       if (idx >= 0) {
-        db.visits[idx] = Object.assign({}, db.visits[idx], input)
+        const prev = db.visits[idx]
+        if (db.currentFamilyId && prev.familyId !== db.currentFamilyId) return null
+        const patch = Object.assign({}, input)
+        delete patch.familyId
+        delete patch.createdAt
+        db.visits[idx] = Object.assign({}, prev, patch, { familyId: prev.familyId })
         return db.visits[idx]
       }
     }
+    if (db.currentFamilyId && input.familyId && input.familyId !== db.currentFamilyId) return null
     const visit = {
       id: uid('v-'),
       createdAt: new Date().toISOString(),
@@ -556,10 +577,15 @@ function saveSchedule(input) {
     if (input.id) {
       const idx = db.schedules.findIndex((s) => s.id === input.id)
       if (idx >= 0) {
-        db.schedules[idx] = Object.assign({}, db.schedules[idx], input)
+        const prev = db.schedules[idx]
+        if (db.currentFamilyId && prev.familyId !== db.currentFamilyId) return null
+        const patch = Object.assign({}, input)
+        delete patch.familyId
+        db.schedules[idx] = Object.assign({}, prev, patch, { familyId: prev.familyId })
         return db.schedules[idx]
       }
     }
+    if (db.currentFamilyId && input.familyId && input.familyId !== db.currentFamilyId) return null
     const schedule = {
       id: uid('s-'),
       familyId: input.familyId,
@@ -580,6 +606,7 @@ function toggleChecklistItem(checklistId, itemId, by) {
   return mutate((db) => {
     const list = db.checklists.find((c) => c.id === checklistId)
     if (!list) return
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return
     const item = list.items.find((i) => i.id === itemId)
     if (!item) return
     item.checked = !item.checked
@@ -592,6 +619,7 @@ function resetChecklistFromTemplate(checklistId) {
   return mutate((db) => {
     const list = db.checklists.find((c) => c.id === checklistId)
     if (!list) return
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return
     const tmpl =
       (list.templateId && (db.templates || []).find((t) => t.id === list.templateId)) ||
       (db.templates || []).find((t) => t.familyId === list.familyId)
@@ -656,6 +684,7 @@ function updateChecklistItems(checklistId, items) {
   return mutate((db) => {
     const list = db.checklists.find((c) => c.id === checklistId)
     if (!list) return
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return
     list.items = items
   })
 }
@@ -664,6 +693,7 @@ function addChecklistItem(checklistId, partial) {
   return mutate((db) => {
     const list = db.checklists.find((c) => c.id === checklistId)
     if (!list) return null
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return null
     const item = {
       id: uid('i'),
       name: (partial && partial.name) || '新物品',
@@ -683,6 +713,7 @@ function deleteChecklistItem(checklistId, itemId) {
   return mutate((db) => {
     const list = db.checklists.find((c) => c.id === checklistId)
     if (!list) return
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return
     list.items = list.items.filter((i) => i.id !== itemId)
   })
 }
@@ -691,6 +722,7 @@ function updateChecklistItem(checklistId, itemId, patch) {
   return mutate((db) => {
     const list = db.checklists.find((c) => c.id === checklistId)
     if (!list) return
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return
     const item = list.items.find((i) => i.id === itemId)
     if (!item) return
     Object.assign(item, patch)
@@ -715,6 +747,7 @@ function deleteVisit(id) {
   return mutate((db) => {
     const idx = db.visits.findIndex((v) => v.id === id)
     if (idx < 0) return false
+    if (db.currentFamilyId && db.visits[idx].familyId !== db.currentFamilyId) return false
     db.visits.splice(idx, 1)
     return true
   })
@@ -724,6 +757,7 @@ function deleteSchedule(id) {
   return mutate((db) => {
     const idx = db.schedules.findIndex((s) => s.id === id)
     if (idx < 0) return false
+    if (db.currentFamilyId && db.schedules[idx].familyId !== db.currentFamilyId) return false
     db.schedules.splice(idx, 1)
     return true
   })
@@ -733,6 +767,7 @@ function deleteGrave(id) {
   return mutate((db) => {
     const idx = db.graves.findIndex((g) => g.id === id)
     if (idx < 0) return false
+    if (db.currentFamilyId && db.graves[idx].familyId !== db.currentFamilyId) return false
     db.graves.splice(idx, 1)
     db.visits = db.visits.filter((v) => v.graveId !== id)
     db.schedules = db.schedules.filter((s) => s.graveId !== id)
@@ -809,6 +844,7 @@ module.exports = {
   createFamily,
   joinFamily,
   setCurrentFamily,
+  belongsToFamily,
   currentUser,
   currentFamily,
   myFamilies,

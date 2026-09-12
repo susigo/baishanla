@@ -1,6 +1,6 @@
 <view class="page spring welcome">
   <view class="welcome-art">
-    <hills-art height="210" label="" />
+    <hills-art height="210" label="" cover-path="/assets/welcome-hills.png" />
   </view>
   <view class="hero">
     <view class="brand">拜山啦</view>

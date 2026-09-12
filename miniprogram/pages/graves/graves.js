@@ -3,7 +3,7 @@ const auth = require('../../utils/auth')
 const { nextOccurrence, formatMD } = require('../../utils/ids')
 
 Page({
-  data: { graves: [] },
+  data: { graves: [], canEdit: false },
   onShow() {
     if (!auth.requireFamily()) return
     this.refresh()
@@ -26,9 +26,13 @@ Page({
         nextLabel: next ? '下次 · ' + next.type + ' ' + formatMD(next.nextDate) : '',
       })
     })
-    this.setData({ graves: graves })
+    this.setData({ graves: graves, canEdit: store.canEditFamily(family.id) })
   },
   goNew() {
+    if (!this.data.canEdit) {
+      wx.showToast({ title: '当前角色仅可查看', icon: 'none' })
+      return
+    }
     wx.navigateTo({ url: '/pages/grave-edit/grave-edit?mode=new' })
   },
   goDetail(e) {

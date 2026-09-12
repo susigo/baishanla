@@ -38,7 +38,12 @@ Page({
     const idx = Number(e.detail.value)
     const f = this.data.families[idx]
     if (f) {
-      store.setCurrentFamily(f.id)
+      const ok = store.setCurrentFamily(f.id)
+      if (!ok) {
+        wx.showToast({ title: '无法切换到该家庭', icon: 'none' })
+        this.refresh()
+        return
+      }
       wx.showToast({ title: '已切换到 ' + f.name, icon: 'none' })
       this.refresh()
     }
