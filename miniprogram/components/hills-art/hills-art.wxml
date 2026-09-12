@@ -1,0 +1,5 @@
+<view class="art" style="height: {{height}}px;">
+  <image class="cover" src="{{src}}" mode="aspectFill" />
+  <view class="wash"></view>
+  <text wx:if="{{label}}" class="label">{{label}}</text>
+</view>

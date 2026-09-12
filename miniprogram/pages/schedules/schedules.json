@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "排程",
+  "usingComponents": {
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

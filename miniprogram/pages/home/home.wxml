@@ -1,0 +1,41 @@
+<view class="page page-tab">
+  <view class="row mb-3">
+    <view class="family-name">{{familyName}} ⌄</view>
+    <view class="chip" bindtap="goMembers">成员 {{memberCount}}</view>
+  </view>
+
+  <view class="card-sage mb-3">
+    <view class="muted">下一场拜山</view>
+    <view class="next-date">{{dateLabel}}</view>
+    <view class="muted">{{nextMeta}}</view>
+    <view class="chip-row">
+      <view wx:if="{{remindLabel}}" class="chip">{{remindLabel}}</view>
+      <view class="chip" bindtap="goSchedules">看排程</view>
+    </view>
+  </view>
+
+  <button class="btn-primary mb-3" bindtap="goVisitNew">✎  记一笔</button>
+
+  <view wx:if="{{listId}}" class="card mb-4" bindtap="goChecklist">
+    <view class="row">
+      <view style="font-weight:600;">{{listTitle}}</view>
+      <view class="muted">{{checked}}/{{total}}</view>
+    </view>
+    <view class="progress">
+      <view class="progress-bar" style="width: {{progress}}%;"></view>
+    </view>
+  </view>
+
+  <view class="muted mb-2">最近记录</view>
+  <view wx:for="{{recent}}" wx:key="id" class="card recent" bindtap="goVisit" data-id="{{item.id}}">
+    <cover-thumb size="40" motif="{{item.motif}}" />
+    <view class="recent-body">
+      <view class="row">
+        <view class="recent-title">{{item.title}}</view>
+        <view class="muted" style="font-size:22rpx;">{{item.graveShort}}</view>
+      </view>
+      <view wx:if="{{item.body}}" class="muted ellipsis">{{item.body}}</view>
+    </view>
+  </view>
+  <empty-state wx:if="{{!recent.length}}" title="还没有记录" description="清明前后，把一次看望轻轻记下来。" action-label="记一笔" bind:action="goVisitNew" />
+</view>

@@ -1,0 +1,16 @@
+<view class="page">
+  <input class="field mb-3" placeholder="名称，如：青山公墓 A区" value="{{name}}" bindinput="onName" />
+  <input class="field mb-3" placeholder="纪念对象，如：祖父 祖母" value="{{memorialFor}}" bindinput="onMemorial" />
+  <input class="field mb-3" placeholder="地址文案" value="{{address}}" bindinput="onAddress" />
+  <textarea class="field field-area mb-3" placeholder="备注：走哪条路、哪座碑…" value="{{note}}" bindinput="onNote" />
+  <view class="muted mb-2">地图定位（占位，未接真实地图 SDK）</view>
+  <view class="map-placeholder mb-3">
+    <view class="map-pin"></view>
+  </view>
+  <view class="row mb-3">
+    <input class="field" style="flex:1;margin-right:12rpx;" placeholder="纬度" value="{{lat}}" bindinput="onLat" />
+    <input class="field" style="flex:1;margin-left:12rpx;" placeholder="经度" value="{{lng}}" bindinput="onLng" />
+  </view>
+  <view class="muted mb-4" style="font-size:24rpx;">点击地图选点为演示占位，可手动改经纬度。</view>
+  <button class="btn-primary" bindtap="save">保存</button>
+</view>

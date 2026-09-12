@@ -1,0 +1,5 @@
+.blush-tone {
+  background:
+    radial-gradient(circle at 70% 30%, rgba(231,184,176,0.5), transparent 50%),
+    linear-gradient(160deg, #F6E8E5, #F7F3EA);
+}

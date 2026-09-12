@@ -1,0 +1,7 @@
+<view class="empty">
+  <view class="blob"></view>
+  <view class="sprout"></view>
+  <view class="title">{{title}}</view>
+  <view class="desc">{{description}}</view>
+  <button wx:if="{{actionLabel}}" class="btn" bindtap="onAction">{{actionLabel}}</button>
+</view>

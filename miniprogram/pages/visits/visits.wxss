@@ -1,0 +1,3 @@
+.visit-row { display: flex; gap: 24rpx; align-items: center; margin-bottom: 16rpx; }
+.visit-body { flex: 1; min-width: 0; }
+.ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

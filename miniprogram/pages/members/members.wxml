@@ -1,0 +1,15 @@
+<view class="page">
+  <view class="card mb-4">
+    <view class="muted mb-2">邀请码</view>
+    <view class="token">{{token}}</view>
+    <button class="btn-primary mt-3" style="height:88rpx;font-size:28rpx;" bindtap="copy">{{copied ? '已复制' : '复制邀请码'}}</button>
+    <button class="btn-secondary mt-3" style="height:88rpx;font-size:28rpx;" bindtap="stubShare">邀请家人（占位）</button>
+  </view>
+  <view wx:for="{{members}}" wx:key="userId" class="card row mb-3">
+    <view>
+      <view style="font-weight:600;">{{item.nickname}}</view>
+      <view class="muted" style="font-size:22rpx;margin-top:4rpx;">加入于 {{item.joinedAt}}</view>
+    </view>
+    <view class="chip">{{item.roleLabel}}</view>
+  </view>
+</view>

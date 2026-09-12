@@ -1,0 +1,16 @@
+<view class="page spring">
+  <view class="relative">
+    <view class="mb-3 mt-2">
+      <hills-art height="92" />
+    </view>
+    <view class="muted mb-4">先创建一个家庭，或加入已有家庭。</view>
+    <view class="row mb-4">
+      <button class="{{mode === 'create' ? 'btn-primary' : 'btn-secondary'}}" style="flex:1;margin-right:12rpx;" bindtap="setCreate">创建家庭</button>
+      <button class="{{mode === 'join' ? 'btn-primary' : 'btn-secondary'}}" style="flex:1;margin-left:12rpx;" bindtap="setJoin">加入家庭</button>
+    </view>
+    <input wx:if="{{mode === 'create'}}" class="field mb-3" placeholder="家庭名称，如：小林家" value="{{name}}" bindinput="onName" />
+    <input wx:else class="field mb-3" placeholder="粘贴邀请码（演示 INVITE-XIAOLIN）" value="{{token}}" bindinput="onToken" />
+    <view wx:if="{{err}}" class="blush mb-2">{{err}}</view>
+    <button class="btn-primary" bindtap="submit">{{mode === 'create' ? '创建并进入' : '加入并进入'}}</button>
+  </view>
+</view>

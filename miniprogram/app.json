@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/welcome/welcome",
+    "pages/home/home",
+    "pages/graves/graves",
+    "pages/visits/visits",
+    "pages/me/me",
+    "pages/login/login",
+    "pages/family/family",
+    "pages/grave-detail/grave-detail",
+    "pages/grave-edit/grave-edit",
+    "pages/visit-new/visit-new",
+    "pages/visit-detail/visit-detail",
+    "pages/schedules/schedules",
+    "pages/schedule-new/schedule-new",
+    "pages/checklist/checklist",
+    "pages/members/members"
+  ],
+  "window": {
+    "backgroundColor": "#F7F3EA",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F7F3EA",
+    "navigationBarTitleText": "拜山啦",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#6B776F",
+    "selectedColor": "#7BAF9E",
+    "backgroundColor": "#F7F3EA",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "assets/tabs/home.png",
+        "selectedIconPath": "assets/tabs/home-on.png"
+      },
+      {
+        "pagePath": "pages/graves/graves",
+        "text": "墓地",
+        "iconPath": "assets/tabs/grave.png",
+        "selectedIconPath": "assets/tabs/grave-on.png"
+      },
+      {
+        "pagePath": "pages/visits/visits",
+        "text": "记录",
+        "iconPath": "assets/tabs/visit.png",
+        "selectedIconPath": "assets/tabs/visit-on.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "assets/tabs/me.png",
+        "selectedIconPath": "assets/tabs/me-on.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

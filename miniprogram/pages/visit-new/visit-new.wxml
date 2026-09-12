@@ -1,0 +1,23 @@
+<view class="page">
+  <view class="h1 mb-3">记一笔</view>
+  <picker mode="selector" range="{{graveNames}}" value="{{graveIndex}}" bindchange="onGrave">
+    <view class="field mb-3">{{graveNames[graveIndex] || '请选择墓地'}}</view>
+  </picker>
+  <picker mode="date" value="{{date}}" bindchange="onDate">
+    <view class="field mb-3">日期 · {{dateLabel}}</view>
+  </picker>
+  <input class="field mb-3" placeholder="标题（可选）" value="{{title}}" bindinput="onTitle" />
+  <textarea class="field field-area mb-3" placeholder="写几句想记下来的..." value="{{body}}" bindinput="onBody" />
+  <view class="muted mb-2">照片 / 视频</view>
+  <view class="grid-3 mb-4">
+    <view class="photo-add" bindtap="addPhoto">＋</view>
+    <image wx:for="{{photos}}" wx:key="*this" class="photo-slot" src="{{item}}" mode="aspectFill" />
+    <view wx:if="{{!photos.length}}" class="cover-photo photo-slot"></view>
+    <view wx:if="{{!photos.length}}" class="cover-photo photo-slot blush-tone"></view>
+  </view>
+  <view class="card row mb-4" bindtap="toggleList">
+    <view class="check {{openList ? 'on' : ''}}"></view>
+    <view style="font-size:28rpx;">同时打开本次物资清单</view>
+  </view>
+  <button class="btn-primary" bindtap="publish">发布</button>
+</view>

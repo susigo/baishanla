@@ -1,0 +1,27 @@
+<view class="page" wx:if="{{missing}}">
+  <view class="muted">未找到</view>
+</view>
+<view class="page" wx:else>
+  <view class="row mb-2">
+    <view></view>
+    <view class="chip" bindtap="goEdit">编辑</view>
+  </view>
+  <hills-art height="140" label="{{grave.coverLabel}}" />
+  <view class="h1 mt-3">{{grave.name}}</view>
+  <view class="muted mt-2">{{grave.memorialFor}}<text wx:if="{{noteShort}}"> · {{noteShort}}</text></view>
+  <view class="grid-2 mt-4">
+    <button class="btn-ghost" bindtap="navigate">导航</button>
+    <button class="btn-primary" style="height:80rpx;font-size:28rpx;box-shadow:none;" bindtap="goVisitNew">记一笔</button>
+    <button class="btn-dashed" bindtap="goChecklist">清单</button>
+    <button class="btn-dashed" bindtap="goSchedules">排程</button>
+  </view>
+  <view class="card mt-4">
+    <view style="font-weight:600;" class="mb-2">近期记录</view>
+    <view class="muted">{{recentLabel}}</view>
+  </view>
+  <view class="card-dash mt-3">{{locLabel}}</view>
+  <view wx:if="{{schedules.length}}" class="card mt-3">
+    <view style="font-weight:600;" class="mb-2">绑定排程</view>
+    <view wx:for="{{schedules}}" wx:key="id" class="muted">{{item.type}} · {{item.date}} · {{item.assignee}}</view>
+  </view>
+</view>

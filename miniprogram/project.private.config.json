@@ -1,0 +1,9 @@
+{
+  "description": "本地私有配置，不要提交真实 AppID。用微信开发者工具填写自己的 AppID。",
+  "projectname": "baishanla",
+  "setting": {
+    "compileHotReLoad": true,
+    "urlCheck": false
+  },
+  "libVersion": "3.8.0"
+}

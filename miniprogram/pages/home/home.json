@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "拜山啦",
+  "usingComponents": {
+    "cover-thumb": "/components/cover-thumb/cover-thumb",
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

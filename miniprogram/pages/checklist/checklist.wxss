@@ -1,0 +1,2 @@
+.flex1 { flex: 1; }
+.item-name { font-weight: 600; }

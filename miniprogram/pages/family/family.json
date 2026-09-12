@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "家庭空间",
+  "usingComponents": {
+    "hills-art": "/components/hills-art/hills-art"
+  }
+}

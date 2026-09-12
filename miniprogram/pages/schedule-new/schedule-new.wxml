@@ -1,0 +1,16 @@
+<view class="page">
+  <picker mode="selector" range="{{types}}" value="{{typeIndex}}" bindchange="onType">
+    <view class="field mb-3">类型 · {{types[typeIndex]}}</view>
+  </picker>
+  <picker mode="date" value="{{date}}" bindchange="onDate">
+    <view class="field mb-3">日期 · {{date}}</view>
+  </picker>
+  <picker mode="selector" range="{{graveNames}}" value="{{graveIndex}}" bindchange="onGrave">
+    <view class="field mb-3">{{graveNames[graveIndex]}}</view>
+  </picker>
+  <input class="field mb-3" placeholder="负责人" value="{{assignee}}" bindinput="onAssignee" />
+  <picker mode="selector" range="{{rules}}" value="{{ruleIndex}}" bindchange="onRule">
+    <view class="field mb-4">重复 · {{rules[ruleIndex]}}</view>
+  </picker>
+  <button class="btn-primary" bindtap="save">保存</button>
+</view>

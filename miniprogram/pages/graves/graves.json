@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "墓地",
+  "usingComponents": {
+    "hills-art": "/components/hills-art/hills-art",
+    "empty-state": "/components/empty-state/empty-state"
+  }
+}

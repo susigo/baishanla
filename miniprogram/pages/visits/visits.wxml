@@ -1,0 +1,20 @@
+<view class="page page-tab">
+  <view class="row mb-3">
+    <view class="h1">记录</view>
+    <button class="btn-ghost" style="height:72rpx;" bindtap="goNew">✎ 记一笔</button>
+  </view>
+  <view wx:for="{{groups}}" wx:key="year" class="mb-4">
+    <view class="muted mb-2">{{item.year}}</view>
+    <view wx:for="{{item.items}}" wx:for-item="v" wx:key="id" class="card visit-row" bindtap="goDetail" data-id="{{v.id}}">
+      <cover-thumb size="44" motif="{{v.motif}}" />
+      <view class="visit-body">
+        <view class="row">
+          <view style="font-weight:600;">{{v.title}}</view>
+          <view class="muted" style="font-size:22rpx;">{{v.dateShort}}</view>
+        </view>
+        <view class="muted ellipsis">{{v.line}}</view>
+      </view>
+    </view>
+  </view>
+  <empty-state wx:if="{{!groups.length}}" title="还没有拜山记录" description="天气、同行的人、路上的小事，都可以轻轻写下来。" action-label="记一笔" bind:action="goNew" />
+</view>

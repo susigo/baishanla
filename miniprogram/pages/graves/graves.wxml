@@ -1,0 +1,15 @@
+<view class="page page-tab">
+  <view class="row mb-3">
+    <view class="h1">墓地</view>
+    <button class="btn-ghost" style="height:72rpx;" bindtap="goNew">＋ 新建</button>
+  </view>
+  <view wx:for="{{graves}}" wx:key="id" class="card grave-card" bindtap="goDetail" data-id="{{item.id}}">
+    <hills-art height="108" label="{{item.coverLabel}}" variant="{{item.variant}}" />
+    <view class="grave-meta">
+      <view class="grave-name">{{item.name}}</view>
+      <view class="muted">{{item.memorialFor}}</view>
+      <view wx:if="{{item.nextLabel}}" class="sage next">{{item.nextLabel}}</view>
+    </view>
+  </view>
+  <empty-state wx:if="{{!graves.length}}" title="还没有墓地档案" description="添加第一座墓地，记下地址与走法，家人都能看见。" action-label="添加第一座" bind:action="goNew" />
+</view>

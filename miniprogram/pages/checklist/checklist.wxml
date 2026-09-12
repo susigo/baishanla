@@ -1,0 +1,21 @@
+<view class="page" wx:if="{{missing}}">
+  <view class="muted">未找到</view>
+</view>
+<view class="page" wx:else>
+  <view class="row mb-2">
+    <view></view>
+    <view class="chip" bindtap="toggleEdit">{{editing ? '完成' : '编辑'}}</view>
+  </view>
+  <view class="h1">{{list.title}}</view>
+  <view class="muted mt-2 mb-3">{{meta}}</view>
+  <view wx:for="{{list.items}}" wx:key="id" class="item-row">
+    <view class="check {{item.checked ? 'on' : ''}}" bindtap="toggleItem" data-id="{{item.id}}"></view>
+    <view class="flex1">
+      <input wx:if="{{editing}}" class="field mb-2" value="{{item.name}}" bindinput="onItemName" data-id="{{item.id}}" />
+      <view wx:else class="item-name {{item.checked ? 'muted' : ''}}">{{item.name}}</view>
+      <view class="muted">×{{item.qty}}{{item.unit ? ' ' + item.unit : ''}}{{item.required ? ' · 必备' : ''}}{{item.checked && item.checkedBy ? ' · ' + item.checkedBy + ' 已勾' : ''}}</view>
+    </view>
+  </view>
+  <button wx:if="{{editing}}" class="btn-secondary mt-4" bindtap="addItem">＋ 添加一项</button>
+  <button class="btn-secondary mt-4" bindtap="reset">从模板重置</button>
+</view>

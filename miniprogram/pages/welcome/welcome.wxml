@@ -1,0 +1,16 @@
+<view class="page spring" style="display:flex;flex-direction:column;min-height:100vh;">
+  <view class="mt-4">
+    <hills-art height="200" />
+  </view>
+  <view class="hero">
+    <view class="brand">拜山啦</view>
+    <view class="slogan">把看望，轻轻记下来</view>
+    <view class="sprout-line">新芽</view>
+  </view>
+  <view class="bottom">
+    <button class="btn-wx mb-3" bindtap="mockWx">微信登录</button>
+    <button class="btn-primary mb-3" bindtap="goLogin">开始</button>
+    <button class="btn-secondary mb-3" bindtap="goLogin">已有账号登录</button>
+    <button class="btn-text" bindtap="enterDemo">进入演示 · 小林家</button>
+  </view>
+</view>
