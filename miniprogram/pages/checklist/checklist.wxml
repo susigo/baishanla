@@ -1,8 +1,7 @@
 <view class="page" wx:if="{{missing}}">
   <empty-state
-    title="还没有清单"
-    description="从家庭模板克隆一份本次物资清单，家人可协同勾选。"
-    action-label="从模板生成"
+    title="{{empty.title}}"
+    action-label="{{empty.cta}}"
     bind:action="createFromTemplate"
   />
 </view>

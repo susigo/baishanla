@@ -54,6 +54,9 @@ Page({
   goFamily() {
     wx.navigateTo({ url: '/pages/family/family?force=1' })
   },
+  goCampaign() {
+    wx.navigateTo({ url: '/pages/campaign/campaign?id=qingming-2027-seed' })
+  },
   goAbout() {
     wx.navigateTo({ url: '/pages/about/about' })
   },

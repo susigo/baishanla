@@ -5,6 +5,8 @@ Component({
     variant: { type: Number, value: 0 },
     coverPath: { type: String, value: '' },
     motif: { type: String, value: '' },
+    fill: { type: Boolean, value: false },
+    flush: { type: Boolean, value: false },
   },
   data: {
     src: '/assets/cover-sage.png',

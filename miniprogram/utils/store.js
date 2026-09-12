@@ -309,6 +309,11 @@ function resetDemo() {
   } catch (e) {
     /* ignore */
   }
+  try {
+    require('./marketing').resetMarketingFlags()
+  } catch (e) {
+    /* ignore */
+  }
   return db
 }
 
@@ -425,6 +430,40 @@ function joinFamily(token) {
     db.currentFamilyId = family.id
     return family
   })
+}
+
+
+function previewInvite(token) {
+  const raw = String(token || '').trim()
+  if (!raw) return { ok: false, reason: 'invalid', family: null, alreadyMember: false }
+  const upper = raw.toUpperCase()
+  if (upper === 'INVITE-EXPIRED') {
+    return { ok: false, reason: 'expired', family: null, alreadyMember: false }
+  }
+  if (upper === 'INVITE-USED' || upper === 'INVITE-EXHAUSTED') {
+    return { ok: false, reason: 'exhausted', family: null, alreadyMember: false }
+  }
+  const db = load()
+  const family = (db.families || []).find(
+    (f) => String(f.inviteToken || '').toLowerCase() === raw.toLowerCase(),
+  )
+  if (!family) return { ok: false, reason: 'invalid', family: null, alreadyMember: false }
+  if (family.inviteStatus === 'expired') {
+    return { ok: false, reason: 'expired', family: { id: family.id, name: family.name }, alreadyMember: false }
+  }
+  if (family.inviteStatus === 'exhausted') {
+    return { ok: false, reason: 'exhausted', family: { id: family.id, name: family.name }, alreadyMember: false }
+  }
+  const alreadyMember = !!(
+    db.sessionUserId &&
+    (db.members || []).some((m) => m.familyId === family.id && m.userId === db.sessionUserId)
+  )
+  return {
+    ok: true,
+    reason: alreadyMember ? 'already_member' : 'ok',
+    family: { id: family.id, name: family.name, inviteToken: family.inviteToken },
+    alreadyMember: alreadyMember,
+  }
 }
 
 function setCurrentFamily(id) {
@@ -843,6 +882,7 @@ module.exports = {
   loginWithPhone,
   createFamily,
   joinFamily,
+  previewInvite,
   setCurrentFamily,
   belongsToFamily,
   currentUser,

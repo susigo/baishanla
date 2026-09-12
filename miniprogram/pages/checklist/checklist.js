@@ -1,6 +1,7 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
 const { formatMD } = require('../../utils/ids')
+const marketing = require('../../utils/marketing')
 
 function captionOf(item) {
   const bits = ['×' + item.qty + (item.unit ? ' ' + item.unit : '')]
@@ -23,6 +24,7 @@ Page({
     progress: 0,
     canEdit: false,
     templates: [],
+    empty: marketing.emptyState('checklist'),
   },
   onLoad(q) {
     this.id = q.id

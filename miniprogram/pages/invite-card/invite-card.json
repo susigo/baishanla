@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "邀请卡",
+  "enableShareAppMessage": true,
+  "enableShareTimeline": true,
+  "usingComponents": {
+    "hills-art": "/components/hills-art/hills-art"
+  }
+}

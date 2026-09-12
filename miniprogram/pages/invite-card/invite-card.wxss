@@ -1,0 +1,30 @@
+.face { padding: 20rpx 20rpx 36rpx; overflow: hidden; }
+.face-body { text-align: center; padding: 28rpx 16rpx 8rpx; }
+.slogan {
+  font-size: 48rpx;
+  font-weight: 600;
+  letter-spacing: 6rpx;
+  color: #2F3A36;
+}
+.hook {
+  margin-top: 12rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #5F9483;
+}
+.family-line {
+  margin-top: 28rpx;
+  font-size: 30rpx;
+  color: #2F3A36;
+}
+.code {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  letter-spacing: 1rpx;
+}
+.role {
+  margin-top: 20rpx;
+  color: #6B776F;
+  font-size: 24rpx;
+  line-height: 1.55;
+}

@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/splash/splash",
     "pages/welcome/welcome",
     "pages/home/home",
     "pages/graves/graves",
@@ -15,6 +16,9 @@
     "pages/schedule-new/schedule-new",
     "pages/checklist/checklist",
     "pages/members/members",
+    "pages/campaign/campaign",
+    "pages/invite-card/invite-card",
+    "pages/join/join",
     "pages/about/about"
   ],
   "window": {

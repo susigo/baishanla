@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "加入家庭",
+  "usingComponents": {
+    "hills-art": "/components/hills-art/hills-art"
+  }
+}

@@ -1,11 +1,12 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
 const { formatMD } = require('../../utils/ids')
+const marketing = require('../../utils/marketing')
 
 const MOTIFS = ['floral', 'hills', 'sage', 'blush']
 
 Page({
-  data: { groups: [], total: 0 },
+  data: { groups: [], total: 0, empty: marketing.emptyState('visits') },
   onShow() {
     if (!auth.requireFamily()) return
     this.refresh()

@@ -1,0 +1,49 @@
+.splash {
+  min-height: 100vh;
+  background: #F7F3EA;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.art-wrap {
+  height: 55vh;
+  overflow: hidden;
+  position: relative;
+}
+.mid {
+  text-align: center;
+  padding: 48rpx 48rpx 16rpx;
+}
+.slogan {
+  font-size: 64rpx;
+  font-weight: 600;
+  letter-spacing: 8rpx;
+  color: #2F3A36;
+}
+.hook {
+  margin-top: 20rpx;
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #5F9483;
+  letter-spacing: 4rpx;
+}
+.foot {
+  margin-top: auto;
+  text-align: center;
+  padding: 24rpx 48rpx calc(48rpx + env(safe-area-inset-bottom));
+}
+.line {
+  color: #6B776F;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+.skip {
+  margin-top: 28rpx;
+  display: inline-flex;
+  padding: 10rpx 36rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid #E5E0D4;
+  background: #fff;
+  color: #6B776F;
+  font-size: 24rpx;
+}

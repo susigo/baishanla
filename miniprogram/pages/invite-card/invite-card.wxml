@@ -1,0 +1,16 @@
+<view class="page spring">
+  <view class="relative">
+    <view class="card face mb-4">
+      <hills-art height="140" cover-path="/assets/welcome-hills.png" />
+      <view class="face-body">
+        <view class="slogan">{{slogan}}</view>
+        <view class="hook">{{hook}}</view>
+        <view class="family-line">{{familyLine}}</view>
+        <view class="code muted">邀请码 {{token}}</view>
+        <view class="role">{{roleHint}}</view>
+      </view>
+    </view>
+    <button class="btn-wx mb-3" open-type="share">{{shareBtn}}</button>
+    <button class="btn-secondary" bindtap="copy">{{copied ? '已复制' : copyLabel}}</button>
+  </view>
+</view>

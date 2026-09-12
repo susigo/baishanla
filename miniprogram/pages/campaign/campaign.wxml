@@ -1,0 +1,23 @@
+<view class="page spring" wx:if="{{missing}}">
+  <view class="relative muted">活动不存在或已结束</view>
+</view>
+<view class="page spring campaign" wx:else>
+  <view class="relative">
+    <view class="hero-art mb-3">
+      <hills-art height="180" cover-path="/assets/welcome-hills.png" />
+    </view>
+    <view class="badge">{{campaign.badge}}</view>
+    <view class="slogan">{{campaign.slogan}}</view>
+    <view class="hook">{{campaign.hook}}</view>
+    <view class="lead">{{campaign.lead}}</view>
+    <view class="card body-card mb-3">
+      <view wx:for="{{campaign.paragraphs}}" wx:key="*this" class="para">{{item}}</view>
+    </view>
+    <view class="benefits mb-4">
+      <view wx:for="{{campaign.benefits}}" wx:key="*this" class="benefit">· {{item}}</view>
+    </view>
+    <button class="btn-primary mb-3" bindtap="goPrimary">{{campaign.primaryCta}}</button>
+    <button class="btn-secondary mb-3" bindtap="goDemo">{{campaign.secondaryCta}}</button>
+    <button class="btn-text" bindtap="dismiss">{{campaign.dismiss}}</button>
+  </view>
+</view>

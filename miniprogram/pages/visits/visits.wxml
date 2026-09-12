@@ -27,5 +27,5 @@
       </view>
     </view>
   </view>
-  <empty-state wx:if="{{!groups.length}}" title="还没有拜山记录" description="天气、同行的人、路上的小事，都可以轻轻写下来。家人都能看见。" action-label="记一笔" bind:action="goNew" />
+  <empty-state wx:if="{{!groups.length}}" title="{{empty.title}}" action-label="{{empty.cta}}" bind:action="goNew" />
 </view>

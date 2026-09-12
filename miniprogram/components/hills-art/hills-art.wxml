@@ -1,4 +1,4 @@
-<view class="art" style="height: {{height}}px;">
+<view class="art {{flush ? 'flush' : ''}} {{fill ? 'fill' : ''}}" style="{{fill ? 'height:100%;' : 'height:' + height + 'px;'}}">
   <image class="cover" src="{{src}}" mode="aspectFill" />
   <view class="wash"></view>
   <view class="vignette"></view>

@@ -12,5 +12,5 @@
       <view wx:if="{{item.nextLabel}}" class="sage next">{{item.nextLabel}}</view>
     </view>
   </view>
-  <empty-state wx:if="{{!graves.length}}" title="还没有墓地档案" description="添加第一座墓地，记下地址与走法，家人都能看见。" action-label="添加第一座" bind:action="goNew" />
+  <empty-state wx:if="{{!graves.length}}" title="{{empty.title}}" action-label="{{empty.cta}}" bind:action="goNew" />
 </view>

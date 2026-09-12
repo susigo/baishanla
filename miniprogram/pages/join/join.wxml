@@ -1,0 +1,26 @@
+<view class="page spring">
+  <view class="relative">
+    <view class="mb-3 mt-2">
+      <hills-art height="120" cover-path="/assets/welcome-hills.png" />
+    </view>
+    <view class="brand">{{slogan}}</view>
+    <view class="hook">{{hook}}</view>
+    <view class="card face mb-3">
+      <view wx:if="{{familyName}}" class="family-name">「{{familyName}}」</view>
+      <view wx:else class="muted">邀请预览</view>
+      <view class="muted role">{{roleHint}}</view>
+      <view wx:if="{{token}}" class="muted code">邀请码 {{token}}</view>
+    </view>
+    <view wx:if="{{fail}}" class="fail mb-3">{{fail}}</view>
+    <view wx:if="{{loggedIn && !already && !fail}}" class="id-chip mb-3">以「{{nickname}}」的身份加入</view>
+    <view wx:if="{{loggedIn && already}}" class="id-chip mb-3">你已是成员 · {{nickname}}</view>
+    <button wx:if="{{canJoin}}" class="btn-primary mb-3" loading="{{busy}}" bindtap="join">加入家庭</button>
+    <button wx:elif="{{already}}" class="btn-primary mb-3" bindtap="goHome">进入家庭</button>
+    <block wx:if="{{!loggedIn}}">
+      <view class="muted hint mb-3">先确认身份，再加入这本家庭账</view>
+      <button class="btn-wx mb-3" bindtap="mockWx">微信登录后加入</button>
+      <button class="btn-secondary mb-3" bindtap="goLogin">其他方式登录</button>
+    </block>
+    <button class="btn-text" bindtap="enterDemo">先看演示 · 小林家</button>
+  </view>
+</view>

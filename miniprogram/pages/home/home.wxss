@@ -80,3 +80,21 @@
 .side { font-size: 22rpx; flex-shrink: 0; }
 .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 4rpx; }
 .date-line { font-size: 22rpx; margin-top: 6rpx; }
+
+.promo { position: relative; padding-right: 56rpx; }
+.promo-x {
+  position: absolute;
+  right: 20rpx;
+  top: 16rpx;
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6B776F;
+  font-size: 36rpx;
+  z-index: 2;
+}
+.promo-title { font-weight: 600; font-size: 32rpx; }
+.promo-line { color: #6B776F; font-size: 26rpx; margin: 8rpx 0 16rpx; line-height: 1.5; }
+.promo-cta { display: inline-flex; }

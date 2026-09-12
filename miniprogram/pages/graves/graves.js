@@ -1,9 +1,10 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
 const { nextOccurrence, formatMD } = require('../../utils/ids')
+const marketing = require('../../utils/marketing')
 
 Page({
-  data: { graves: [], canEdit: false },
+  data: { graves: [], canEdit: false, empty: marketing.emptyState('graves') },
   onShow() {
     if (!auth.requireFamily()) return
     this.refresh()

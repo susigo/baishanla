@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "一起拜山啦",
+  "usingComponents": {
+    "hills-art": "/components/hills-art/hills-art"
+  }
+}

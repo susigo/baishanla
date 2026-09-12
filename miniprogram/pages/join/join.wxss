@@ -1,0 +1,34 @@
+.brand {
+  text-align: center;
+  font-size: 48rpx;
+  font-weight: 600;
+  letter-spacing: 6rpx;
+}
+.hook {
+  text-align: center;
+  color: #5F9483;
+  font-size: 30rpx;
+  font-weight: 600;
+  margin: 8rpx 0 28rpx;
+}
+.face { text-align: center; padding: 36rpx 32rpx; }
+.family-name { font-size: 36rpx; font-weight: 600; }
+.role { margin-top: 12rpx; line-height: 1.55; }
+.code { margin-top: 12rpx; letter-spacing: 1rpx; }
+.fail {
+  background: #F6E8E5;
+  color: #2F3A36;
+  border-radius: 24rpx;
+  padding: 20rpx 28rpx;
+  line-height: 1.55;
+}
+.id-chip {
+  text-align: center;
+  padding: 14rpx 24rpx;
+  border-radius: 999rpx;
+  background: #fff;
+  border: 2rpx solid #E5E0D4;
+  color: #5F9483;
+  font-size: 24rpx;
+}
+.hint { text-align: center; }

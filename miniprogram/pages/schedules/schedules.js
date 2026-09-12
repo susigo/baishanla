@@ -2,6 +2,7 @@ const store = require('../../utils/store')
 const auth = require('../../utils/auth')
 const subscribe = require('../../utils/subscribe')
 const { nextOccurrence, formatMD, daysUntil } = require('../../utils/ids')
+const marketing = require('../../utils/marketing')
 
 Page({
   data: {
@@ -9,6 +10,7 @@ Page({
     subscribed: false,
     sheetVisible: false,
     canEdit: false,
+    empty: marketing.emptyState('schedules'),
   },
   onShow() {
     if (!auth.requireFamily()) return

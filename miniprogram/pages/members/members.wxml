@@ -2,8 +2,8 @@
   <view class="card invite-card mb-4">
     <view class="muted">邀请家人加入{{familyName}}</view>
     <view class="token">{{token}}</view>
-    <view class="muted invite-hint">点「邀请家人」发微信卡片；对方打开后预填邀请码。也可复制码手动发给长辈。</view>
-    <button class="btn-primary mt-3" open-type="share">邀请家人</button>
+    <view class="muted invite-hint">点「邀请家人」打开邀请卡，发给微信好友。对方打开后进入加入页。也可复制码发给长辈。</view>
+    <button class="btn-primary mt-3" bindtap="goInviteCard">邀请家人</button>
     <button class="btn-secondary mt-3" bindtap="copy">{{copied ? '已复制' : '复制邀请码'}}</button>
   </view>
 
@@ -19,4 +19,5 @@
     <view class="chip {{item.role === 'owner' ? 'chip-on' : ''}}">{{item.roleLabel}}<text wx:if="{{item.canManage}}"> ›</text></view>
   </view>
   <view wx:if="{{isOwner}}" class="muted tip">点成员可改角色或移除（仅所有者）</view>
+  <empty-state wx:if="{{showEmpty}}" title="{{empty.title}}" action-label="{{empty.cta}}" bind:action="goInviteCard" />
 </view>

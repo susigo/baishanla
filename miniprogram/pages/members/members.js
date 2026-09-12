@@ -1,6 +1,7 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
 const share = require('../../utils/share')
+const marketing = require('../../utils/marketing')
 
 const ROLE = { owner: '所有者', editor: '编辑', viewer: '查看' }
 const COLORS = ['#7BAF9E', '#E7B8B0', '#5F9483', '#B7D0C4', '#C9A66B']
@@ -13,6 +14,8 @@ Page({
     members: [],
     isOwner: false,
     myUserId: '',
+    empty: marketing.emptyState('members'),
+    showEmpty: false,
   },
   onShow() {
     if (!auth.requireFamily()) return
@@ -38,7 +41,11 @@ Page({
       copied: false,
       isOwner: role === 'owner',
       myUserId: user.id,
+      showEmpty: members.length <= 1,
     })
+  },
+  goInviteCard() {
+    wx.navigateTo({ url: '/pages/invite-card/invite-card' })
   },
   copy() {
     wx.setClipboardData({

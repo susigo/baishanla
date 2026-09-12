@@ -29,7 +29,7 @@
     </view>
     <view wx:if="{{canEdit}}" class="muted del" bindtap="remove" data-id="{{item.id}}">删除</view>
   </view>
-  <empty-state wx:if="{{!schedules.length}}" title="暂无排程" description="把清明、忌日记下来，到时候轻轻提醒家人。" action-label="新建排程" bind:action="goNew" />
+  <empty-state wx:if="{{!schedules.length}}" title="{{empty.title}}" action-label="{{empty.cta}}" bind:action="goNew" />
 
   <view wx:if="{{sheetVisible}}" class="sheet-mask" bindtap="closeSheet">
     <view class="sheet" catchtap="noop">

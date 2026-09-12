@@ -2,6 +2,7 @@ const store = require('../../utils/store')
 const auth = require('../../utils/auth')
 const share = require('../../utils/share')
 const subscribe = require('../../utils/subscribe')
+const marketing = require('../../utils/marketing')
 const { formatMD, daysUntil } = require('../../utils/ids')
 
 Page({
@@ -20,6 +21,9 @@ Page({
     progress: 0,
     recent: [],
     subscribed: false,
+    showPromo: false,
+    promo: marketing.homePromo,
+    emptyVisits: marketing.emptyState('visits'),
   },
   onShow() {
     if (!auth.requireFamily()) return
@@ -84,6 +88,7 @@ Page({
       progress: total ? Math.round((checked / total) * 100) : 0,
       recent: recent,
       subscribed: subscribe.isOptedIn(),
+      showPromo: marketing.shouldShowHomePromo(),
     })
   },
   goMe() {
@@ -101,6 +106,13 @@ Page({
   goChecklist() {
     if (!this.data.listId) return
     wx.navigateTo({ url: '/pages/checklist/checklist?id=' + this.data.listId })
+  },
+  goCampaign() {
+    wx.navigateTo({ url: '/pages/campaign/campaign?id=' + marketing.homePromo.campaignId })
+  },
+  dismissPromo() {
+    marketing.dismissCampaign(marketing.homePromo.campaignId)
+    this.setData({ showPromo: false })
   },
   goVisit(e) {
     wx.navigateTo({

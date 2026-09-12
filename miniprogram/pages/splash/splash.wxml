@@ -1,0 +1,15 @@
+<view class="splash">
+  <block wx:if="{{visible}}">
+    <view class="art-wrap">
+      <hills-art fill="{{true}}" flush="{{true}}" cover-path="/assets/welcome-hills.png" />
+    </view>
+    <view class="mid">
+      <view class="slogan">{{slogan}}</view>
+      <view class="hook">{{hook}}</view>
+    </view>
+    <view class="foot">
+      <view class="line">{{line}}</view>
+      <view class="skip" bindtap="skip">{{skip}}</view>
+    </view>
+  </block>
+</view>

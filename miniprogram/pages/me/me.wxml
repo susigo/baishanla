@@ -28,6 +28,10 @@
       <view>创建 / 加入家庭</view>
       <view class="muted">›</view>
     </view>
+    <view class="card menu mb-3" bindtap="goCampaign">
+      <view>活动</view>
+      <view class="muted">一起拜山啦 ›</view>
+    </view>
     <view class="card menu mb-3" bindtap="goAbout">
       <view>关于拜山啦</view>
       <view class="muted">›</view>

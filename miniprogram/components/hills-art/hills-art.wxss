@@ -40,3 +40,12 @@
   border-radius: 999rpx;
   border: 2rpx solid rgba(183, 208, 196, 0.5);
 }
+
+.art.flush {
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+.art.fill {
+  height: 100%;
+}
