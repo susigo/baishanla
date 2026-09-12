@@ -1,0 +1,19 @@
+{
+  "name": "拜山啦",
+  "short_name": "拜山啦",
+  "description": "把看望，轻轻记下来",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F7F3EA",
+  "theme_color": "#7BAF9E",
+  "lang": "zh-CN",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
