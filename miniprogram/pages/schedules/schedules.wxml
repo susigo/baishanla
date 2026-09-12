@@ -3,6 +3,20 @@
     <view></view>
     <view class="chip" bindtap="goNew">＋ 新建</view>
   </view>
+
+  <view class="sub-card {{subscribed ? 'is-on' : ''}} mb-4">
+    <view class="sub-kicker">{{subscribed ? '已预约提醒（演示）' : '清明前提醒'}}</view>
+    <view class="sub-title">提前 7 / 3 / 1 天</view>
+    <view class="muted sub-copy">{{subscribed ? '演示状态已记下。正式版配置模板 ID 后，会在清明前轻轻提醒家人。' : '到时候轻轻提醒家人准备物资、出门看望。你可以选择接收：'}}</view>
+    <view wx:if="{{!subscribed}}" class="sub-list">
+      <view>清明将至</view>
+      <view>物资清单进度</view>
+      <view>家庭排程</view>
+    </view>
+    <button wx:if="{{!subscribed}}" class="btn-primary mt-3" style="height:88rpx;font-size:28rpx;" bindtap="optIn">开启清明提醒</button>
+    <button wx:else class="btn-secondary mt-3" style="height:88rpx;font-size:28rpx;" bindtap="optIn">查看演示说明</button>
+  </view>
+
   <view wx:for="{{schedules}}" wx:key="id" class="card mb-3">
     <view style="font-weight:600;">{{item.type}} · {{item.date}}</view>
     <view class="muted mt-2">{{item.meta}}</view>
@@ -12,5 +26,13 @@
     </view>
   </view>
   <empty-state wx:if="{{!schedules.length}}" title="暂无排程" description="把清明、忌日记下来，到时候轻轻提醒家人。" action-label="新建排程" bind:action="goNew" />
-  <button class="btn-secondary mt-4" bindtap="stubSubscribe">订阅提醒（占位）</button>
+
+  <view wx:if="{{sheetVisible}}" class="sheet-mask" bindtap="closeSheet">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">已预约提醒（演示）</view>
+      <view class="muted sheet-body">开发者工具 / 未配置模板时仅演示 UI；正式版配置模板 ID 后即可授权。</view>
+      <button class="btn-primary" bindtap="closeSheet">知道了</button>
+    </view>
+  </view>
 </view>

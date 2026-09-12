@@ -12,8 +12,8 @@
     <view class="check {{item.checked ? 'on' : ''}}" bindtap="toggleItem" data-id="{{item.id}}"></view>
     <view class="flex1">
       <input wx:if="{{editing}}" class="field mb-2" value="{{item.name}}" bindinput="onItemName" data-id="{{item.id}}" />
-      <view wx:else class="item-name {{item.checked ? 'muted' : ''}}">{{item.name}}</view>
-      <view class="muted">×{{item.qty}}{{item.unit ? ' ' + item.unit : ''}}{{item.required ? ' · 必备' : ''}}{{item.checked && item.checkedBy ? ' · ' + item.checkedBy + ' 已勾' : ''}}</view>
+      <view wx:else class="item-name {{item.checked ? 'done' : ''}}">{{item.name}}</view>
+      <view class="muted caption">{{item.caption}}</view>
     </view>
   </view>
   <button wx:if="{{editing}}" class="btn-secondary mt-4" bindtap="addItem">＋ 添加一项</button>

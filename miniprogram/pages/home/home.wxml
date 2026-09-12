@@ -1,32 +1,39 @@
 <view class="page page-tab">
-  <view class="row mb-3">
-    <view class="family-name">{{familyName}} ⌄</view>
+  <view class="row family-row mb-3">
+    <view class="family-name" bindtap="goMe">{{familyName}} <text class="chev">⌄</text></view>
     <view class="chip" bindtap="goMembers">成员 {{memberCount}}</view>
   </view>
 
-  <view class="card-sage mb-3">
-    <view class="muted">下一场拜山</view>
-    <view class="next-date">{{dateLabel}}</view>
-    <view class="muted">{{nextMeta}}</view>
+  <view class="hero-next card-sage mb-3">
+    <view class="hero-kicker">下一场拜山</view>
+    <view class="hero-date">{{dateLabel}}</view>
+    <view class="hero-meta">{{nextMeta}}</view>
     <view class="chip-row">
       <view wx:if="{{remindLabel}}" class="chip">{{remindLabel}}</view>
       <view class="chip" bindtap="goSchedules">看排程</view>
+      <view class="chip {{subscribed ? 'chip-on' : ''}}" bindtap="goSchedules">{{subscribed ? '已预约提醒' : '开启提醒'}}</view>
     </view>
   </view>
 
-  <button class="btn-primary mb-3" bindtap="goVisitNew">✎  记一笔</button>
+  <button class="btn-primary btn-note mb-3" bindtap="goVisitNew">
+    <text class="note-ico">✎</text>
+    <text>记一笔</text>
+  </button>
 
-  <view wx:if="{{listId}}" class="card mb-4" bindtap="goChecklist">
+  <view wx:if="{{listId}}" class="card progress-card mb-4" bindtap="goChecklist">
     <view class="row">
-      <view style="font-weight:600;">{{listTitle}}</view>
-      <view class="muted">{{checked}}/{{total}}</view>
+      <view>
+        <view class="progress-title">{{listTitle}}</view>
+        <view class="muted progress-sub">轻轻勾掉要带的东西</view>
+      </view>
+      <view class="progress-count">{{checked}}/{{total}}</view>
     </view>
     <view class="progress">
       <view class="progress-bar" style="width: {{progress}}%;"></view>
     </view>
   </view>
 
-  <view class="muted mb-2">最近记录</view>
+  <view class="muted section-label mb-2">最近记录</view>
   <view wx:for="{{recent}}" wx:key="id" class="card recent" bindtap="goVisit" data-id="{{item.id}}">
     <cover-thumb size="40" motif="{{item.motif}}" />
     <view class="recent-body">

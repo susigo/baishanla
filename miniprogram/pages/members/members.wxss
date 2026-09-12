@@ -1,1 +1,8 @@
-.token { font-weight: 600; letter-spacing: 2rpx; font-size: 32rpx; }
+.invite-card { padding: 32rpx 32rpx 36rpx; }
+.token {
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  font-size: 34rpx;
+  margin: 12rpx 0 8rpx;
+}
+.invite-hint { font-size: 22rpx; line-height: 1.5; }

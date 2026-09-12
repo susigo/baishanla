@@ -7,13 +7,13 @@ page {
 }
 
 .page {
-  padding: 24rpx 40rpx 48rpx;
+  padding: 24rpx 40rpx calc(48rpx + env(safe-area-inset-bottom));
   min-height: 100vh;
   box-sizing: border-box;
 }
 
 .page-tab {
-  padding-bottom: 48rpx;
+  padding-bottom: calc(48rpx + env(safe-area-inset-bottom));
 }
 
 .spring {
@@ -47,14 +47,14 @@ page {
 
 .card {
   background: #fff;
-  border-radius: 36rpx;
+  border-radius: 32rpx;
   padding: 28rpx 32rpx;
   box-shadow: 0 20rpx 56rpx rgba(47, 58, 54, 0.07);
 }
 
 .card-sage {
   background: linear-gradient(145deg, #E5F0EB 0%, #F4F8F5 55%, #F7F3EA 100%);
-  border-radius: 36rpx;
+  border-radius: 32rpx;
   padding: 32rpx 36rpx;
   box-shadow: 0 20rpx 56rpx rgba(47, 58, 54, 0.05);
   border: 2rpx solid rgba(183, 208, 196, 0.45);
@@ -64,7 +64,7 @@ page {
   border: 2rpx dashed rgba(123, 175, 158, 0.7);
   background: transparent;
   box-shadow: none;
-  border-radius: 36rpx;
+  border-radius: 32rpx;
   padding: 28rpx 32rpx;
   color: #6B776F;
   font-size: 26rpx;
@@ -268,26 +268,24 @@ button::after {
 }
 
 .check {
-  width: 48rpx;
-  height: 48rpx;
+  width: 56rpx;
+  height: 56rpx;
   border-radius: 50%;
   border: 4rpx solid #7BAF9E;
   flex-shrink: 0;
   background: #fff;
   position: relative;
+  box-sizing: border-box;
 }
 
-.check.on::after {
-  content: "";
-  position: absolute;
-  inset: 8rpx;
-  border-radius: 50%;
+.check.on {
   background: #7BAF9E;
+  box-shadow: inset 0 0 0 10rpx #fff;
 }
 
 .map-placeholder {
   height: 360rpx;
-  border-radius: 36rpx;
+  border-radius: 32rpx;
   background:
     linear-gradient(#0000 49%, #d5d0c4 50%, #0000 51%),
     linear-gradient(90deg, #0000 49%, #d5d0c4 50%, #0000 51%),
@@ -393,4 +391,55 @@ button.btn-secondary,
 button.btn-wx {
   width: 100%;
   box-sizing: border-box;
+}
+
+.relative {
+  position: relative;
+  z-index: 1;
+}
+
+.page-safe {
+  padding-bottom: calc(48rpx + env(safe-area-inset-bottom));
+}
+
+.chip-on {
+  background: #E5F0EB;
+  border-color: #7BAF9E;
+  color: #5F9483;
+}
+
+.sheet-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(47, 58, 54, 0.28);
+  z-index: 80;
+  display: flex;
+  align-items: flex-end;
+}
+
+.sheet {
+  width: 100%;
+  background: #F7F3EA;
+  border-radius: 32rpx 32rpx 0 0;
+  padding: 16rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -16rpx 48rpx rgba(47, 58, 54, 0.08);
+}
+
+.sheet-handle {
+  width: 72rpx;
+  height: 8rpx;
+  border-radius: 999rpx;
+  background: #E5E0D4;
+  margin: 8rpx auto 28rpx;
+}
+
+.sheet-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.sheet-body {
+  line-height: 1.6;
+  margin-bottom: 32rpx;
 }

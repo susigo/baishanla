@@ -1,6 +1,6 @@
 .empty {
   text-align: center;
-  padding: 48rpx 24rpx 32rpx;
+  padding: 64rpx 32rpx 40rpx;
   position: relative;
 }
 
@@ -39,14 +39,16 @@
 
 .title {
   font-weight: 600;
-  font-size: 30rpx;
+  font-size: 32rpx;
   color: #2F3A36;
 }
 
 .desc {
   color: #6B776F;
   font-size: 26rpx;
-  margin-top: 8rpx;
+  line-height: 1.55;
+  margin: 12rpx auto 0;
+  max-width: 480rpx;
 }
 
 .btn {

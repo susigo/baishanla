@@ -13,4 +13,15 @@ function todayISO() {
   return y + '-' + m + '-' + day
 }
 
-module.exports = { uid, todayISO }
+function formatMD(iso) {
+  if (!iso) return ''
+  const today = todayISO()
+  if (iso === today) return '今天'
+  const m = Number(String(iso).slice(5, 7))
+  const d = Number(String(iso).slice(8, 10))
+  if (!m || !d) return ''
+  return m + '月' + d + '日'
+}
+
+module.exports = { uid, todayISO, formatMD }
+

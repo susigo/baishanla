@@ -1,11 +1,13 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
+const share = require('../../utils/share')
 
 const ROLE = { owner: '所有者', editor: '编辑', viewer: '查看' }
 
 Page({
   data: {
     token: '',
+    familyName: '',
     copied: false,
     members: [],
   },
@@ -15,7 +17,12 @@ Page({
     const members = store.familyMembers(family.id).map((m) =>
       Object.assign({}, m, { roleLabel: ROLE[m.role] || m.role }),
     )
-    this.setData({ token: family.inviteToken, members: members, copied: false })
+    this.setData({
+      token: family.inviteToken,
+      familyName: family.name,
+      members: members,
+      copied: false,
+    })
   },
   copy() {
     wx.setClipboardData({
@@ -26,11 +33,18 @@ Page({
       },
     })
   },
-  stubShare() {
-    wx.showModal({
-      title: '邀请家人（占位）',
-      content: '正式版走微信分享卡片。演示请复制邀请码，对方登录后在「加入家庭」粘贴。小林家邀请码：' + this.data.token,
-      showCancel: false,
+  onShareAppMessage() {
+    return share.familyShareCard({
+      familyName: this.data.familyName,
+      token: this.data.token,
     })
+  },
+  onShareTimeline() {
+    return share.timelineShare(
+      share.familyShareCard({
+        familyName: this.data.familyName,
+        token: this.data.token,
+      }),
+    )
   },
 })

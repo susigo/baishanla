@@ -1,23 +1,42 @@
-.hero {
-  text-align: center;
+.welcome {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.welcome-art {
   margin-top: 48rpx;
   position: relative;
   z-index: 1;
 }
-
+.hero {
+  text-align: center;
+  margin-top: 56rpx;
+  position: relative;
+  z-index: 1;
+}
 .brand {
   font-size: 64rpx;
   font-weight: 600;
   letter-spacing: 8rpx;
   color: #5F9483;
 }
-
 .slogan {
   color: #2F3A36;
   font-size: 30rpx;
   margin-top: 16rpx;
 }
-
+.invite-chip {
+  position: relative;
+  z-index: 1;
+  margin: 24rpx auto 0;
+  padding: 12rpx 28rpx;
+  border-radius: 999rpx;
+  background: #fff;
+  border: 2rpx solid #E5E0D4;
+  color: #5F9483;
+  font-size: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(47, 58, 54, 0.04);
+}
 .bottom {
   margin-top: auto;
   padding: 80rpx 0 32rpx;

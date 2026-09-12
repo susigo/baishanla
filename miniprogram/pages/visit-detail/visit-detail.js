@@ -1,5 +1,6 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
+const share = require('../../utils/share')
 
 Page({
   data: { missing: false, visit: {}, meta: '' },
@@ -19,5 +20,16 @@ Page({
       visit: visit,
       meta: visit.date + ' · ' + ((grave && grave.name) || '') + ' · ' + visit.authorName,
     })
+  },
+  onShareAppMessage() {
+    const v = this.data.visit || {}
+    const family = store.currentFamily()
+    const name = (family && family.name) || '拜山啦'
+    return share.familyShareCard({
+      title: v.title ? '来' + name + '看「' + v.title + '」' : undefined,
+    })
+  },
+  onShareTimeline() {
+    return share.timelineShare(this.onShareAppMessage())
   },
 })

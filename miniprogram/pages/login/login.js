@@ -1,5 +1,6 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
+const share = require('../../utils/share')
 
 Page({
   data: {
@@ -7,6 +8,13 @@ Page({
     code: '',
     sent: false,
     err: '',
+    pendingInvite: '',
+  },
+  onLoad(q) {
+    if (q && q.invite) share.savePendingInvite(q.invite)
+  },
+  onShow() {
+    this.setData({ pendingInvite: share.readPendingInvite() })
   },
   onPhone(e) {
     this.setData({ phone: e.detail.value.trim() })

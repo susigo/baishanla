@@ -1,13 +1,29 @@
+.family-row { padding-top: 4rpx; }
 .family-name {
   font-weight: 600;
-  font-size: 32rpx;
+  font-size: 34rpx;
+  letter-spacing: 1rpx;
 }
+.chev { color: #6B776F; font-weight: 400; }
 
-.next-date {
-  font-size: 40rpx;
-  font-weight: 600;
-  margin: 12rpx 0 8rpx;
+.hero-next {
+  padding: 36rpx 36rpx 32rpx;
+  position: relative;
+  overflow: hidden;
 }
+.hero-kicker {
+  font-size: 24rpx;
+  color: #6B776F;
+  letter-spacing: 2rpx;
+}
+.hero-date {
+  font-size: 48rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  margin: 12rpx 0 10rpx;
+  color: #2F3A36;
+}
+.hero-meta { color: #6B776F; font-size: 26rpx; }
 
 .chip-row {
   display: flex;
@@ -16,13 +32,22 @@
   margin-top: 24rpx;
 }
 
+.btn-note { gap: 12rpx; }
+.note-ico { font-size: 30rpx; line-height: 1; }
+
+.progress-card { padding: 28rpx 32rpx 32rpx; }
+.progress-title { font-weight: 600; font-size: 30rpx; }
+.progress-sub { font-size: 22rpx; margin-top: 6rpx; }
+.progress-count { color: #6B776F; font-size: 26rpx; font-weight: 600; }
+
+.section-label { font-size: 24rpx; letter-spacing: 2rpx; }
+
 .recent {
   display: flex;
   gap: 24rpx;
   align-items: flex-start;
   margin-bottom: 16rpx;
 }
-
 .recent-body { flex: 1; min-width: 0; }
 .recent-title { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 4rpx; }

@@ -2,18 +2,26 @@
   <view class="muted">未找到</view>
 </view>
 <view class="page" wx:else>
-  <view class="row mb-2">
-    <view></view>
-    <view class="chip" bindtap="goEdit">编辑</view>
-  </view>
   <hills-art height="140" label="{{grave.coverLabel}}" />
   <view class="h1 mt-3">{{grave.name}}</view>
   <view class="muted mt-2">{{grave.memorialFor}}<text wx:if="{{noteShort}}"> · {{noteShort}}</text></view>
-  <view class="grid-2 mt-4">
-    <button class="btn-ghost" bindtap="navigate">导航</button>
-    <button class="btn-primary" style="height:80rpx;font-size:28rpx;box-shadow:none;" bindtap="goVisitNew">记一笔</button>
-    <button class="btn-dashed" bindtap="goChecklist">清单</button>
-    <button class="btn-dashed" bindtap="goSchedules">排程</button>
+  <view class="action-row">
+    <button class="action" bindtap="navigate">
+      <view class="action-ico">⌖</view>
+      <text>导航</text>
+    </button>
+    <button class="action action-primary" bindtap="goVisitNew">
+      <view class="action-ico">✎</view>
+      <text>记一笔</text>
+    </button>
+    <button class="action" bindtap="goChecklist">
+      <view class="action-ico">☰</view>
+      <text>清单</text>
+    </button>
+    <button class="action" bindtap="moreActions">
+      <view class="action-ico">···</view>
+      <text>更多</text>
+    </button>
   </view>
   <view class="card mt-4">
     <view style="font-weight:600;" class="mb-2">近期记录</view>

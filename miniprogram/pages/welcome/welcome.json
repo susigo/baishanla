@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "拜山啦",
+  "enableShareAppMessage": true,
+  "enableShareTimeline": true,
   "usingComponents": {
     "hills-art": "/components/hills-art/hills-art"
   }

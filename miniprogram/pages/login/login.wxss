@@ -1,1 +1,19 @@
-.relative { position: relative; z-index: 1; }
+.login-brand {
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: 600;
+  letter-spacing: 6rpx;
+  color: #5F9483;
+  margin-top: 8rpx;
+}
+.form-card { padding: 32rpx; }
+.label { font-size: 24rpx; margin-bottom: 8rpx; }
+.invite-chip {
+  text-align: center;
+  padding: 12rpx 24rpx;
+  border-radius: 999rpx;
+  background: #fff;
+  border: 2rpx solid #E5E0D4;
+  color: #5F9483;
+  font-size: 24rpx;
+}

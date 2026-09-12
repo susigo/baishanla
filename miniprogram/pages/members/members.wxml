@@ -1,9 +1,10 @@
 <view class="page">
-  <view class="card mb-4">
-    <view class="muted mb-2">邀请码</view>
+  <view class="card invite-card mb-4">
+    <view class="muted">邀请家人加入{{familyName}}</view>
     <view class="token">{{token}}</view>
-    <button class="btn-primary mt-3" style="height:88rpx;font-size:28rpx;" bindtap="copy">{{copied ? '已复制' : '复制邀请码'}}</button>
-    <button class="btn-secondary mt-3" style="height:88rpx;font-size:28rpx;" bindtap="stubShare">邀请家人（占位）</button>
+    <view class="muted invite-hint">分享卡片带上邀请码；对方打开后可预填加入。演示无服务端校验。</view>
+    <button class="btn-primary mt-3" open-type="share">邀请家人</button>
+    <button class="btn-secondary mt-3" bindtap="copy">{{copied ? '已复制' : '复制邀请码'}}</button>
   </view>
   <view wx:for="{{members}}" wx:key="userId" class="card row mb-3">
     <view>

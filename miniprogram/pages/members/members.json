@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "成员与邀请"
+  "navigationBarTitleText": "成员与邀请",
+  "enableShareAppMessage": true,
+  "enableShareTimeline": true
 }

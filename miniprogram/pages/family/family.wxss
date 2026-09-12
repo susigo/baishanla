@@ -1,1 +1,15 @@
-.relative { position: relative; z-index: 1; }
+.family-lead {
+  color: #6B776F;
+  text-align: center;
+  margin-bottom: 8rpx;
+}
+.form-card { padding: 32rpx; }
+.invite-chip {
+  text-align: center;
+  padding: 12rpx 24rpx;
+  border-radius: 999rpx;
+  background: #fff;
+  border: 2rpx solid #E5E0D4;
+  color: #5F9483;
+  font-size: 24rpx;
+}

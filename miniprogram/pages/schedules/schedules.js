@@ -1,8 +1,13 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
+const subscribe = require('../../utils/subscribe')
 
 Page({
-  data: { schedules: [] },
+  data: {
+    schedules: [],
+    subscribed: false,
+    sheetVisible: false,
+  },
   onShow() {
     if (!auth.requireFamily()) return
     this.refresh()
@@ -17,16 +22,27 @@ Page({
         remindChips: (s.remindDays || []).map((d) => '提前 ' + d + ' 天'),
       })
     })
-    this.setData({ schedules: schedules })
+    this.setData({
+      schedules: schedules,
+      subscribed: subscribe.isOptedIn(),
+    })
   },
   goNew() {
     wx.navigateTo({ url: '/pages/schedule-new/schedule-new' })
   },
-  stubSubscribe() {
-    wx.showModal({
-      title: '订阅提醒（占位）',
-      content: '未接真实订阅消息模板。正式版需在公众平台配置模板 ID 后调用 wx.requestSubscribeMessage。',
-      showCancel: false,
+  optIn() {
+    subscribe.requestQingmingRemind().then((r) => {
+      this.setData({
+        subscribed: subscribe.isOptedIn(),
+        sheetVisible: !!r.demo,
+      })
+      if (!r.demo && r.accepted) {
+        wx.showToast({ title: '已开启清明提醒', icon: 'success' })
+      }
     })
   },
+  closeSheet() {
+    this.setData({ sheetVisible: false })
+  },
+  noop() {},
 })

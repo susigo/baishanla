@@ -1,1 +1,34 @@
 .chip-row { display: flex; gap: 16rpx; flex-wrap: wrap; margin-top: 16rpx; }
+
+.sub-card {
+  background: linear-gradient(145deg, #E5F0EB 0%, #F4F8F5 55%, #F7F3EA 100%);
+  border-radius: 32rpx;
+  padding: 32rpx 36rpx;
+  box-shadow: 0 20rpx 56rpx rgba(47, 58, 54, 0.05);
+  border: 2rpx solid rgba(183, 208, 196, 0.45);
+}
+.sub-card.is-on {
+  background: #fff;
+  border-color: #7BAF9E;
+}
+.sub-kicker {
+  font-size: 24rpx;
+  color: #6B776F;
+  letter-spacing: 2rpx;
+}
+.sub-title {
+  font-size: 40rpx;
+  font-weight: 600;
+  margin: 10rpx 0 8rpx;
+}
+.sub-copy { line-height: 1.55; }
+.sub-list {
+  margin-top: 16rpx;
+  color: #2F3A36;
+  font-size: 26rpx;
+  line-height: 1.8;
+}
+.sub-list view::before {
+  content: "·  ";
+  color: #7BAF9E;
+}

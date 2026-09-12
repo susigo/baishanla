@@ -1,6 +1,16 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
-const { uid } = require('../../utils/ids')
+const { uid, formatMD } = require('../../utils/ids')
+
+function captionOf(item) {
+  const bits = ['×' + item.qty + (item.unit ? ' ' + item.unit : '')]
+  if (item.required) bits.push('必备')
+  if (item.checked && item.checkedBy) {
+    const when = item.checkedAt ? formatMD(item.checkedAt) : ''
+    bits.push(when ? item.checkedBy + ' · ' + when : item.checkedBy + ' 已勾')
+  }
+  return bits.join(' · ')
+}
 
 Page({
   data: {
@@ -23,9 +33,10 @@ Page({
       return
     }
     const grave = list.graveId ? store.getGrave(list.graveId) : null
+    const items = (list.items || []).map((i) => Object.assign({}, i, { caption: captionOf(i) }))
     this.setData({
       missing: false,
-      list: list,
+      list: Object.assign({}, list, { items: items }),
       meta: (list.fromTemplate ? '来自模板' : '本次') + ' · ' + ((grave && grave.name) || '家庭'),
     })
   },

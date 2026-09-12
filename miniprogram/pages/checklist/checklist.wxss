@@ -1,2 +1,5 @@
 .flex1 { flex: 1; }
-.item-name { font-weight: 600; }
+.item-name { font-weight: 600; font-size: 30rpx; }
+.item-name.done { color: #6B776F; }
+.caption { margin-top: 6rpx; font-size: 24rpx; }
+.item-row { padding: 32rpx 0; align-items: center; }

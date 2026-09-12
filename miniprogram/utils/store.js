@@ -123,15 +123,15 @@ function seed() {
         title: '2026 清明清单',
         fromTemplate: true,
         items: [
-          { id: 'i1', name: '水果', qty: 1, unit: '份', required: false, checked: true, checkedBy: '妈妈' },
+          { id: 'i1', name: '水果', qty: 1, unit: '份', required: false, checked: true, checkedBy: '妈妈', checkedAt: '2026-03-28' },
           { id: 'i2', name: '香烛', qty: 1, unit: '套', required: false, checked: false },
           { id: 'i3', name: '纸钱', qty: 2, unit: '刀', required: true, checked: false },
-          { id: 'i4', name: '湿纸巾', qty: 1, unit: '', required: false, checked: true, checkedBy: '爸爸' },
+          { id: 'i4', name: '湿纸巾', qty: 1, unit: '', required: false, checked: true, checkedBy: '爸爸', checkedAt: '2026-03-30' },
           { id: 'i5', name: '鲜花', qty: 1, unit: '束', required: false, checked: false },
-          { id: 'i6', name: '矿泉水', qty: 2, unit: '瓶', required: false, checked: true, checkedBy: '小林' },
+          { id: 'i6', name: '矿泉水', qty: 2, unit: '瓶', required: false, checked: true, checkedBy: '小林', checkedAt: '2026-04-01' },
           { id: 'i7', name: '垃圾袋', qty: 2, unit: '个', required: true, checked: false },
           { id: 'i8', name: '抹布', qty: 1, unit: '块', required: false, checked: false },
-          { id: 'i9', name: '打火机', qty: 1, unit: '个', required: false, checked: true, checkedBy: '爸爸' },
+          { id: 'i9', name: '打火机', qty: 1, unit: '个', required: false, checked: true, checkedBy: '爸爸', checkedAt: '2026-03-29' },
           { id: 'i10', name: '零钱', qty: 1, unit: '份', required: false, checked: false },
         ],
       },
@@ -173,6 +173,8 @@ function ensureSeed() {
 function resetDemo() {
   const db = seed()
   persist(db)
+  try { wx.removeStorageSync('baishanla.subscribeOptIn') } catch (e) { /* ignore */ }
+  try { wx.removeStorageSync('baishanla.pendingInvite') } catch (e) { /* ignore */ }
   return db
 }
 
@@ -424,6 +426,7 @@ function toggleChecklistItem(checklistId, itemId, by) {
     if (!item) return
     item.checked = !item.checked
     item.checkedBy = item.checked ? by : ''
+    item.checkedAt = item.checked ? todayISO() : ''
   })
 }
 
@@ -434,6 +437,7 @@ function resetChecklistFromTemplate(checklistId) {
     list.items.forEach((i) => {
       i.checked = false
       i.checkedBy = ''
+      i.checkedAt = ''
     })
   })
 }

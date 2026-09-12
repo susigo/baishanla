@@ -1,5 +1,6 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
+const share = require('../../utils/share')
 
 Page({
   data: {
@@ -67,5 +68,23 @@ Page({
   },
   goSchedules() {
     wx.navigateTo({ url: '/pages/schedules/schedules' })
+  },
+  moreActions() {
+    wx.showActionSheet({
+      itemList: ['排程', '编辑墓地'],
+      success: (res) => {
+        if (res.tapIndex === 0) this.goSchedules()
+        if (res.tapIndex === 1) this.goEdit()
+      },
+    })
+  },
+  onShareAppMessage() {
+    const g = this.data.grave || {}
+    return share.familyShareCard({
+      title: g.name ? '来看看「' + g.name + '」' : undefined,
+    })
+  },
+  onShareTimeline() {
+    return share.timelineShare(this.onShareAppMessage())
   },
 })

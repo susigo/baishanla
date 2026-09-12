@@ -1,5 +1,7 @@
 const store = require('../../utils/store')
 const auth = require('../../utils/auth')
+const share = require('../../utils/share')
+const subscribe = require('../../utils/subscribe')
 
 Page({
   data: {
@@ -14,6 +16,7 @@ Page({
     total: 0,
     progress: 0,
     recent: [],
+    subscribed: false,
   },
   onShow() {
     if (!auth.requireFamily()) return
@@ -60,7 +63,11 @@ Page({
       total: total,
       progress: total ? Math.round((checked / total) * 100) : 0,
       recent: recent,
+      subscribed: subscribe.isOptedIn(),
     })
+  },
+  goMe() {
+    wx.switchTab({ url: '/pages/me/me' })
   },
   goMembers() {
     wx.navigateTo({ url: '/pages/members/members' })
@@ -77,5 +84,11 @@ Page({
   },
   goVisit(e) {
     wx.navigateTo({ url: '/pages/visit-detail/visit-detail?id=' + e.currentTarget.dataset.id })
+  },
+  onShareAppMessage() {
+    return share.familyShareCard()
+  },
+  onShareTimeline() {
+    return share.timelineShare(share.familyShareCard())
   },
 })
