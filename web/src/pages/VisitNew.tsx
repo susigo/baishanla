@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { PageHeader } from '../components/PageHeader'
-import { CoverThumb } from '../components/HillsArt'
+import { CoverPlaceholder } from '../components/CoverPlaceholder'
 import { useDB } from '../lib/useDB'
 import {
   currentFamily,
@@ -134,8 +134,8 @@ export function VisitNew() {
         ))}
         {!photos.length ? (
           <>
-            <CoverThumb size={undefined as unknown as number} motif="sage" />
-            <CoverThumb size={undefined as unknown as number} motif="blush" />
+            <CoverPlaceholder variant="photo" tone="sage" />
+            <CoverPlaceholder variant="photo" tone="blush" />
           </>
         ) : null}
       </div>
