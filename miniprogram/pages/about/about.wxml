@@ -1,0 +1,29 @@
+<view class="page spring">
+  <view class="relative" wx:if="{{tab === 'about'}}">
+    <view class="card-sage mb-4">
+      <view class="brand">拜山啦</view>
+      <view class="muted">把看望，轻轻记下来</view>
+    </view>
+    <view class="card mb-3 body">
+      拜山啦帮助家庭一起记墓地位置、清明排程、物资清单与看望记录。本原型数据保存在本机 wx.storage，便于真机走通主路径。
+    </view>
+    <view class="card mb-3 body">
+      <view class="ink bold mb-2">已知限制（下个迭代）</view>
+      <view class="muted line">· 正式 code2session / 服务端会话</view>
+      <view class="muted line">· 订阅消息模板 ID 真推送</view>
+      <view class="muted line">· 照片对象存储 CDN</view>
+    </view>
+    <view class="muted tip">版本 · 商业加深原型 · 2026</view>
+  </view>
+  <view class="relative" wx:else>
+    <view class="card mb-3 body">
+      <view class="ink bold mb-2">我们如何处理数据</view>
+      当前原型不上传账号到自有服务器。登录会话、家庭、墓地坐标、看望照片（本机用户目录）均保存在本机微信存储。重置演示数据或清除小程序缓存即可删除。
+    </view>
+    <view class="card mb-3 body">
+      <view class="ink bold mb-2">权限说明</view>
+      选点与导航会使用系统地图能力；选图会访问相册/相机。分享邀请仅携带邀请码路径，不含密码。
+    </view>
+    <view class="muted tip">正式版上线前将补充完整隐私政策与用户协议。</view>
+  </view>
+</view>

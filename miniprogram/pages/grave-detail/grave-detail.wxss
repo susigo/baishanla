@@ -1,35 +1,43 @@
-.action-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12rpx;
+.sub { line-height: 1.5; }
+.action-grid {
   margin-top: 36rpx;
+  gap: 16rpx;
 }
-.action {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10rpx;
-  padding: 20rpx 0 16rpx;
-  background: #fff;
+.pill {
+  height: 88rpx;
   border-radius: 28rpx;
-  box-shadow: 0 12rpx 32rpx rgba(47, 58, 54, 0.05);
-  color: #2F3A36;
-  font-size: 22rpx;
-  font-weight: 600;
-}
-.action-ico {
-  width: 72rpx;
-  height: 72rpx;
-  border-radius: 50%;
-  background: #E5F0EB;
-  color: #5F9483;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 30rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  box-sizing: border-box;
 }
-.action-primary .action-ico {
+.pill.primary {
   background: #7BAF9E;
   color: #fff;
-  box-shadow: 0 8rpx 20rpx rgba(123, 175, 158, 0.35);
+  box-shadow: 0 12rpx 28rpx rgba(123, 175, 158, 0.3);
 }
+.pill.secondary {
+  background: #fff;
+  color: #5F9483;
+  border: 3rpx solid #7BAF9E;
+}
+.pill.dashed {
+  background: #fff;
+  color: #5F9483;
+  border: 3rpx dashed #7BAF9E;
+}
+.card-h { font-weight: 600; margin-bottom: 12rpx; }
+.recent-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 16rpx;
+  padding: 12rpx 0;
+  border-bottom: 2rpx solid #F0EBE0;
+  font-size: 28rpx;
+}
+.recent-line:last-child { border-bottom: none; }
+.sched { margin-top: 8rpx; line-height: 1.5; }
+
+.addr { margin-top: 8rpx; font-size: 24rpx; line-height: 1.5; }

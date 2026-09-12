@@ -2,34 +2,52 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding-top: 32rpx;
 }
 .welcome-art {
-  margin-top: 48rpx;
+  margin-top: 24rpx;
   position: relative;
   z-index: 1;
 }
 .hero {
   text-align: center;
-  margin-top: 56rpx;
+  margin-top: 48rpx;
   position: relative;
   z-index: 1;
 }
 .brand {
   font-size: 64rpx;
   font-weight: 600;
-  letter-spacing: 8rpx;
+  letter-spacing: 10rpx;
   color: #5F9483;
 }
 .slogan {
   color: #2F3A36;
   font-size: 30rpx;
-  margin-top: 16rpx;
+  margin-top: 18rpx;
+  opacity: 0.9;
+}
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  margin-top: 28rpx;
+}
+.divider-line {
+  width: 56rpx;
+  height: 2rpx;
+  background: #E7B8B0;
+}
+.leaf {
+  font-size: 22rpx;
+  line-height: 1;
 }
 .invite-chip {
   position: relative;
   z-index: 1;
-  margin: 24rpx auto 0;
-  padding: 12rpx 28rpx;
+  margin: 28rpx auto 0;
+  padding: 14rpx 28rpx;
   border-radius: 999rpx;
   background: #fff;
   border: 2rpx solid #E5E0D4;
@@ -37,9 +55,9 @@
   font-size: 24rpx;
   box-shadow: 0 8rpx 24rpx rgba(47, 58, 54, 0.04);
 }
+.spacer { flex: 1; min-height: 48rpx; }
 .bottom {
-  margin-top: auto;
-  padding: 80rpx 0 32rpx;
+  padding: 24rpx 0 40rpx;
   position: relative;
   z-index: 1;
 }

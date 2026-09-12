@@ -1,16 +1,30 @@
 <view class="page">
+  <view class="section-title">封面</view>
+  <view class="cover-wrap mb-3" bindtap="pickCover">
+    <hills-art height="150" label="{{coverLabel}}" cover-path="{{coverPath}}" motif="{{coverMotif}}" />
+    <view class="cover-hint">点击拍照 / 从相册选图</view>
+  </view>
+  <view class="motif-row mb-4">
+    <view class="chip {{coverMotif === 'sage' && !coverPath ? 'chip-on' : ''}}" data-motif="sage" bindtap="setMotif">春山</view>
+    <view class="chip {{coverMotif === 'blush' && !coverPath ? 'chip-on' : ''}}" data-motif="blush" bindtap="setMotif">桃霞</view>
+    <view wx:if="{{coverPath}}" class="chip" bindtap="clearCover">恢复默认</view>
+  </view>
+
   <input class="field mb-3" placeholder="名称，如：青山公墓 A区" value="{{name}}" bindinput="onName" />
   <input class="field mb-3" placeholder="纪念对象，如：祖父 祖母" value="{{memorialFor}}" bindinput="onMemorial" />
   <input class="field mb-3" placeholder="地址文案" value="{{address}}" bindinput="onAddress" />
   <textarea class="field field-area mb-3" placeholder="备注：走哪条路、哪座碑…" value="{{note}}" bindinput="onNote" />
-  <view class="muted mb-2">地图定位（占位，未接真实地图 SDK）</view>
-  <view class="map-placeholder mb-3">
-    <view class="map-pin"></view>
+
+  <view class="section-title">定位</view>
+  <view class="map-card mb-3" bindtap="chooseLocation">
+    <view class="map-art">
+      <view class="map-pin"></view>
+    </view>
+    <view class="loc-body">
+      <view class="loc-title">{{hasLoc ? '已选位置' : '选择位置'}}</view>
+      <view class="muted loc-text">{{locLabel}}</view>
+    </view>
   </view>
-  <view class="row mb-3">
-    <input class="field" style="flex:1;margin-right:12rpx;" placeholder="纬度" value="{{lat}}" bindinput="onLat" />
-    <input class="field" style="flex:1;margin-left:12rpx;" placeholder="经度" value="{{lng}}" bindinput="onLng" />
-  </view>
-  <view class="muted mb-4" style="font-size:24rpx;">点击地图选点为演示占位，可手动改经纬度。</view>
+  <view class="muted tip mb-4">真机调用 wx.chooseLocation；详情页「导航」用 wx.openLocation 打开真实地图。</view>
   <button class="btn-primary" bindtap="save">保存</button>
 </view>

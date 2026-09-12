@@ -1,17 +1,26 @@
 <view class="page" wx:if="{{missing}}">
-  <view class="muted">未找到</view>
+  <empty-state title="记录不存在" description="可能已被删除，或属于另一个家庭。" />
 </view>
 <view class="page spring" wx:else>
   <view class="relative">
-    <view class="h1">{{visit.title || '看望'}}</view>
+    <view class="row top">
+      <view class="h1 grow">{{visit.title || '看望'}}</view>
+      <view wx:if="{{canEdit}}" class="chip" bindtap="edit">编辑</view>
+    </view>
     <view class="muted mt-2">{{meta}}</view>
     <view class="body">{{visit.body || '（无正文）'}}</view>
     <view wx:if="{{visit.photos.length}}" class="grid-2 mt-4">
-      <image wx:for="{{visit.photos}}" wx:key="*this" class="photo-slot" src="{{item}}" mode="aspectFill" />
+      <image
+        wx:for="{{visit.photos}}"
+        wx:key="*this"
+        class="photo-slot photo-img"
+        src="{{item}}"
+        mode="aspectFill"
+        bindtap="preview"
+        data-src="{{item}}"
+      />
     </view>
-    <view wx:else class="grid-2 mt-4">
-      <view class="cover-photo photo-wide"></view>
-      <view class="cover-photo photo-wide blush-tone"></view>
-    </view>
+    <view wx:else class="card-dash mt-4">这次还没有配图 · 编辑时可补上</view>
+    <button wx:if="{{canEdit}}" class="btn-text danger mt-4" bindtap="remove">删除记录</button>
   </view>
 </view>

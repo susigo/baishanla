@@ -1,8 +1,10 @@
 .art {
-  border-radius: 40rpx;
+  border-radius: 36rpx;
   position: relative;
   overflow: hidden;
-  border: 3rpx dashed #B7D0C4;
+  border: 2rpx dashed rgba(123, 175, 158, 0.55);
+  box-shadow: 0 16rpx 40rpx rgba(47, 58, 54, 0.06);
+  background: #E8F2EC;
 }
 
 .cover {
@@ -15,17 +17,26 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 22% 28%, rgba(231, 184, 176, 0.18), transparent 46%);
+    radial-gradient(circle at 22% 28%, rgba(231, 184, 176, 0.22), transparent 48%),
+    linear-gradient(180deg, rgba(247, 243, 234, 0.05), rgba(247, 243, 234, 0.28));
+  pointer-events: none;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 -40rpx 60rpx rgba(47, 58, 54, 0.04);
   pointer-events: none;
 }
 
 .label {
   position: absolute;
   left: 24rpx;
-  bottom: 16rpx;
+  bottom: 18rpx;
   color: #5F9483;
   font-size: 24rpx;
-  background: rgba(247, 243, 234, 0.78);
-  padding: 4rpx 16rpx;
+  background: rgba(247, 243, 234, 0.86);
+  padding: 6rpx 18rpx;
   border-radius: 999rpx;
+  border: 2rpx solid rgba(183, 208, 196, 0.5);
 }

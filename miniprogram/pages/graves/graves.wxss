@@ -1,4 +1,11 @@
 .grave-card { padding: 16rpx 16rpx 0; overflow: hidden; margin-bottom: 24rpx; }
 .grave-meta { padding: 24rpx 16rpx 28rpx; }
 .grave-name { font-weight: 600; font-size: 32rpx; }
+.note {
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .next { font-size: 24rpx; margin-top: 12rpx; }

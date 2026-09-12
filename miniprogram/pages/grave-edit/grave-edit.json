@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "编辑墓地"
+  "navigationBarTitleText": "编辑墓地",
+  "usingComponents": {
+    "hills-art": "/components/hills-art/hills-art"
+  }
 }

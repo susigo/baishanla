@@ -1,6 +1,33 @@
-const { uid, todayISO } = require('./ids')
+const { uid, todayISO, nextOccurrence } = require('./ids')
 
-const KEY = 'baishanla.db.v1'
+const KEY = 'baishanla.db.v2'
+const LEGACY_KEY = 'baishanla.db.v1'
+
+const TEMPLATE_ITEMS = [
+  { name: '水果', qty: 1, unit: '份', required: false },
+  { name: '香烛', qty: 1, unit: '套', required: false },
+  { name: '纸钱', qty: 2, unit: '刀', required: true },
+  { name: '湿纸巾', qty: 1, unit: '', required: false },
+  { name: '鲜花', qty: 1, unit: '束', required: false },
+  { name: '矿泉水', qty: 2, unit: '瓶', required: false },
+  { name: '垃圾袋', qty: 2, unit: '个', required: true },
+  { name: '抹布', qty: 1, unit: '块', required: false },
+  { name: '打火机', qty: 1, unit: '个', required: false },
+  { name: '零钱', qty: 1, unit: '份', required: false },
+]
+
+function freshItemsFromTemplate() {
+  return TEMPLATE_ITEMS.map((t, i) => ({
+    id: 'i' + (i + 1),
+    name: t.name,
+    qty: t.qty,
+    unit: t.unit,
+    required: !!t.required,
+    checked: false,
+    checkedBy: '',
+    checkedAt: '',
+  }))
+}
 
 function seed() {
   const ownerId = 'u-owner'
@@ -11,11 +38,28 @@ function seed() {
   const grave1 = 'g-qingshan'
   const grave2 = 'g-houshan'
   const scheduleId = 's-qingming'
+  const scheduleChongyang = 's-chongyang'
   const checklistId = 'c-qingming'
   const invite = 'INVITE-XIAOLIN'
+  const tmplId = 't-qingming-default'
+
+  const items = freshItemsFromTemplate()
+  // seed some checked state so home progress feels alive
+  items[0].checked = true
+  items[0].checkedBy = '妈妈'
+  items[0].checkedAt = '2026-03-28'
+  items[3].checked = true
+  items[3].checkedBy = '爸爸'
+  items[3].checkedAt = '2026-03-30'
+  items[5].checked = true
+  items[5].checkedBy = '小林'
+  items[5].checkedAt = '2026-04-01'
+  items[8].checked = true
+  items[8].checkedBy = '爸爸'
+  items[8].checkedAt = '2026-03-29'
 
   return {
-    version: 1,
+    version: 2,
     sessionUserId: null,
     currentFamilyId: null,
     users: [
@@ -50,6 +94,8 @@ function seed() {
         lng: 120.1551,
         note: '从东门进，第二条路左转，石碑有松树图案。',
         coverLabel: '春山封面',
+        coverPath: '',
+        coverMotif: 'sage',
       },
       {
         id: grave2,
@@ -61,6 +107,8 @@ function seed() {
         lng: 120.2,
         note: '村里小路尽头，注意雨天湿滑。',
         coverLabel: '春山封面',
+        coverPath: '',
+        coverMotif: 'blush',
       },
     ],
     visits: [
@@ -113,6 +161,31 @@ function seed() {
         remindDays: [7, 3, 1],
         assignee: '妈妈',
       },
+      {
+        id: scheduleChongyang,
+        familyId: familyId,
+        graveId: grave1,
+        type: '重阳',
+        title: '重阳',
+        date: '2026-10-11',
+        rule: 'yearly',
+        remindDays: [7, 1],
+        assignee: '爸爸',
+      },
+    ],
+    templates: [
+      {
+        id: tmplId,
+        familyId: familyId,
+        name: '清明物资模板',
+        items: TEMPLATE_ITEMS.map((t, i) => ({
+          id: 'ti' + (i + 1),
+          name: t.name,
+          qty: t.qty,
+          unit: t.unit,
+          required: !!t.required,
+        })),
+      },
     ],
     checklists: [
       {
@@ -120,32 +193,80 @@ function seed() {
         familyId: familyId,
         graveId: grave1,
         scheduleId: scheduleId,
+        templateId: tmplId,
         title: '2026 清明清单',
         fromTemplate: true,
-        items: [
-          { id: 'i1', name: '水果', qty: 1, unit: '份', required: false, checked: true, checkedBy: '妈妈', checkedAt: '2026-03-28' },
-          { id: 'i2', name: '香烛', qty: 1, unit: '套', required: false, checked: false },
-          { id: 'i3', name: '纸钱', qty: 2, unit: '刀', required: true, checked: false },
-          { id: 'i4', name: '湿纸巾', qty: 1, unit: '', required: false, checked: true, checkedBy: '爸爸', checkedAt: '2026-03-30' },
-          { id: 'i5', name: '鲜花', qty: 1, unit: '束', required: false, checked: false },
-          { id: 'i6', name: '矿泉水', qty: 2, unit: '瓶', required: false, checked: true, checkedBy: '小林', checkedAt: '2026-04-01' },
-          { id: 'i7', name: '垃圾袋', qty: 2, unit: '个', required: true, checked: false },
-          { id: 'i8', name: '抹布', qty: 1, unit: '块', required: false, checked: false },
-          { id: 'i9', name: '打火机', qty: 1, unit: '个', required: false, checked: true, checkedBy: '爸爸', checkedAt: '2026-03-29' },
-          { id: 'i10', name: '零钱', qty: 1, unit: '份', required: false, checked: false },
-        ],
+        items: items,
       },
     ],
   }
 }
 
+function migrate(db) {
+  if (!db || typeof db !== 'object') return null
+  if (!db.version) return null
+  if (db.version < 2) {
+    db.version = 2
+    db.templates = db.templates || []
+    if (!db.templates.length) {
+      const fam = (db.families && db.families[0]) || null
+      if (fam) {
+        db.templates.push({
+          id: 't-qingming-default',
+          familyId: fam.id,
+          name: '清明物资模板',
+          items: TEMPLATE_ITEMS.map((t, i) => ({
+            id: 'ti' + (i + 1),
+            name: t.name,
+            qty: t.qty,
+            unit: t.unit,
+            required: !!t.required,
+          })),
+        })
+      }
+    }
+    ;(db.graves || []).forEach((g) => {
+      if (g.coverPath == null) g.coverPath = ''
+      if (!g.coverMotif) g.coverMotif = 'sage'
+    })
+    ;(db.checklists || []).forEach((c) => {
+      if (c.templateId == null) c.templateId = (db.templates[0] && db.templates[0].id) || ''
+    })
+    // ensure a future-facing 重阳 if only past 清明 exists
+    const hasChongyang = (db.schedules || []).some((s) => s.type === '重阳')
+    if (!hasChongyang && db.families && db.families[0] && db.graves && db.graves[0]) {
+      db.schedules.push({
+        id: uid('s-'),
+        familyId: db.families[0].id,
+        graveId: db.graves[0].id,
+        type: '重阳',
+        title: '重阳',
+        date: '2026-10-11',
+        rule: 'yearly',
+        remindDays: [7, 1],
+        assignee: '爸爸',
+      })
+    }
+  }
+  return db
+}
+
 function load() {
   try {
-    const raw = wx.getStorageSync(KEY)
-    if (raw && raw.version) return raw
+    let raw = wx.getStorageSync(KEY)
+    if (!raw) raw = wx.getStorageSync(LEGACY_KEY)
+    if (raw && raw.version) {
+      const db = migrate(raw)
+      persist(db)
+      return db
+    }
     if (typeof raw === 'string' && raw) {
       const parsed = JSON.parse(raw)
-      if (parsed && parsed.version) return parsed
+      if (parsed && parsed.version) {
+        const db = migrate(parsed)
+        persist(db)
+        return db
+      }
     }
   } catch (e) {
     /* ignore */
@@ -157,6 +278,11 @@ function load() {
 
 function persist(db) {
   wx.setStorageSync(KEY, db)
+  try {
+    wx.setStorageSync(LEGACY_KEY, db)
+  } catch (e) {
+    /* ignore */
+  }
 }
 
 function mutate(fn) {
@@ -173,8 +299,16 @@ function ensureSeed() {
 function resetDemo() {
   const db = seed()
   persist(db)
-  try { wx.removeStorageSync('baishanla.subscribeOptIn') } catch (e) { /* ignore */ }
-  try { wx.removeStorageSync('baishanla.pendingInvite') } catch (e) { /* ignore */ }
+  try {
+    wx.removeStorageSync('baishanla.subscribeOptIn')
+  } catch (e) {
+    /* ignore */
+  }
+  try {
+    wx.removeStorageSync('baishanla.pendingInvite')
+  } catch (e) {
+    /* ignore */
+  }
   return db
 }
 
@@ -249,6 +383,20 @@ function createFamily(name) {
       nickname: user.nickname,
       joinedAt: todayISO(),
     })
+    // default template for new family
+    db.templates = db.templates || []
+    db.templates.push({
+      id: uid('t-'),
+      familyId: family.id,
+      name: '清明物资模板',
+      items: TEMPLATE_ITEMS.map((t, i) => ({
+        id: uid('ti'),
+        name: t.name,
+        qty: t.qty,
+        unit: t.unit,
+        required: !!t.required,
+      })),
+    })
     db.currentFamilyId = family.id
     return family
   })
@@ -281,8 +429,17 @@ function joinFamily(token) {
 
 function setCurrentFamily(id) {
   return mutate((db) => {
+    if (!db.sessionUserId || !id) return false
+    const ok = db.members.some((m) => m.familyId === id && m.userId === db.sessionUserId)
+    if (!ok) return false
     db.currentFamilyId = id
+    return true
   })
+}
+
+/** Entity must belong to the active family — prevents cross-family role/data leaks. */
+function belongsToFamily(entity, familyId) {
+  return !!(entity && familyId && entity.familyId === familyId)
 }
 
 function currentUser() {
@@ -326,6 +483,10 @@ function familyChecklists(familyId) {
   return load().checklists.filter((c) => c.familyId === familyId)
 }
 
+function familyTemplates(familyId) {
+  return (load().templates || []).filter((t) => t.familyId === familyId)
+}
+
 function getGrave(id) {
   return load().graves.find((g) => g.id === id)
 }
@@ -342,15 +503,25 @@ function getChecklist(id) {
   return load().checklists.find((c) => c.id === id)
 }
 
+function getTemplate(id) {
+  return (load().templates || []).find((t) => t.id === id)
+}
+
 function saveGrave(input) {
   return mutate((db) => {
     if (input.id) {
       const idx = db.graves.findIndex((g) => g.id === input.id)
       if (idx >= 0) {
-        db.graves[idx] = Object.assign({}, db.graves[idx], input)
+        const prev = db.graves[idx]
+        if (db.currentFamilyId && prev.familyId !== db.currentFamilyId) return null
+        // never reassign familyId across households
+        const patch = Object.assign({}, input)
+        delete patch.familyId
+        db.graves[idx] = Object.assign({}, prev, patch, { familyId: prev.familyId })
         return db.graves[idx]
       }
     }
+    if (db.currentFamilyId && input.familyId && input.familyId !== db.currentFamilyId) return null
     const grave = {
       id: uid('g-'),
       familyId: input.familyId,
@@ -361,6 +532,8 @@ function saveGrave(input) {
       lng: input.lng,
       note: input.note,
       coverLabel: input.coverLabel || '春山封面',
+      coverPath: input.coverPath || '',
+      coverMotif: input.coverMotif || 'sage',
     }
     db.graves.push(grave)
     return grave
@@ -372,10 +545,16 @@ function saveVisit(input) {
     if (input.id) {
       const idx = db.visits.findIndex((v) => v.id === input.id)
       if (idx >= 0) {
-        db.visits[idx] = Object.assign({}, db.visits[idx], input)
+        const prev = db.visits[idx]
+        if (db.currentFamilyId && prev.familyId !== db.currentFamilyId) return null
+        const patch = Object.assign({}, input)
+        delete patch.familyId
+        delete patch.createdAt
+        db.visits[idx] = Object.assign({}, prev, patch, { familyId: prev.familyId })
         return db.visits[idx]
       }
     }
+    if (db.currentFamilyId && input.familyId && input.familyId !== db.currentFamilyId) return null
     const visit = {
       id: uid('v-'),
       createdAt: new Date().toISOString(),
@@ -398,10 +577,15 @@ function saveSchedule(input) {
     if (input.id) {
       const idx = db.schedules.findIndex((s) => s.id === input.id)
       if (idx >= 0) {
-        db.schedules[idx] = Object.assign({}, db.schedules[idx], input)
+        const prev = db.schedules[idx]
+        if (db.currentFamilyId && prev.familyId !== db.currentFamilyId) return null
+        const patch = Object.assign({}, input)
+        delete patch.familyId
+        db.schedules[idx] = Object.assign({}, prev, patch, { familyId: prev.familyId })
         return db.schedules[idx]
       }
     }
+    if (db.currentFamilyId && input.familyId && input.familyId !== db.currentFamilyId) return null
     const schedule = {
       id: uid('s-'),
       familyId: input.familyId,
@@ -422,6 +606,7 @@ function toggleChecklistItem(checklistId, itemId, by) {
   return mutate((db) => {
     const list = db.checklists.find((c) => c.id === checklistId)
     if (!list) return
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return
     const item = list.items.find((i) => i.id === itemId)
     if (!item) return
     item.checked = !item.checked
@@ -434,11 +619,64 @@ function resetChecklistFromTemplate(checklistId) {
   return mutate((db) => {
     const list = db.checklists.find((c) => c.id === checklistId)
     if (!list) return
-    list.items.forEach((i) => {
-      i.checked = false
-      i.checkedBy = ''
-      i.checkedAt = ''
-    })
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return
+    const tmpl =
+      (list.templateId && (db.templates || []).find((t) => t.id === list.templateId)) ||
+      (db.templates || []).find((t) => t.familyId === list.familyId)
+    if (tmpl && tmpl.items && tmpl.items.length) {
+      list.items = tmpl.items.map((t) => ({
+        id: uid('i'),
+        name: t.name,
+        qty: t.qty,
+        unit: t.unit || '',
+        required: !!t.required,
+        checked: false,
+        checkedBy: '',
+        checkedAt: '',
+      }))
+      list.fromTemplate = true
+      list.templateId = tmpl.id
+    } else {
+      list.items.forEach((i) => {
+        i.checked = false
+        i.checkedBy = ''
+        i.checkedAt = ''
+      })
+    }
+  })
+}
+
+/** Clone a family template into a new checklist instance (for a grave/schedule/year). */
+function cloneTemplateToChecklist(opts) {
+  return mutate((db) => {
+    const familyId = opts.familyId
+    const tmpl =
+      (opts.templateId && (db.templates || []).find((t) => t.id === opts.templateId)) ||
+      (db.templates || []).find((t) => t.familyId === familyId)
+    if (!tmpl) return null
+    const year = opts.year || String(todayISO()).slice(0, 4)
+    const title = opts.title || year + ' ' + (opts.type || tmpl.name.replace('模板', '') || '物资') + '清单'
+    const list = {
+      id: uid('c-'),
+      familyId: familyId,
+      graveId: opts.graveId || null,
+      scheduleId: opts.scheduleId || null,
+      templateId: tmpl.id,
+      title: title,
+      fromTemplate: true,
+      items: tmpl.items.map((t) => ({
+        id: uid('i'),
+        name: t.name,
+        qty: t.qty,
+        unit: t.unit || '',
+        required: !!t.required,
+        checked: false,
+        checkedBy: '',
+        checkedAt: '',
+      })),
+    }
+    db.checklists.push(list)
+    return list
   })
 }
 
@@ -446,14 +684,154 @@ function updateChecklistItems(checklistId, items) {
   return mutate((db) => {
     const list = db.checklists.find((c) => c.id === checklistId)
     if (!list) return
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return
     list.items = items
+  })
+}
+
+function addChecklistItem(checklistId, partial) {
+  return mutate((db) => {
+    const list = db.checklists.find((c) => c.id === checklistId)
+    if (!list) return null
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return null
+    const item = {
+      id: uid('i'),
+      name: (partial && partial.name) || '新物品',
+      qty: (partial && partial.qty) || 1,
+      unit: (partial && partial.unit) || '',
+      required: !!(partial && partial.required),
+      checked: false,
+      checkedBy: '',
+      checkedAt: '',
+    }
+    list.items.push(item)
+    return item
+  })
+}
+
+function deleteChecklistItem(checklistId, itemId) {
+  return mutate((db) => {
+    const list = db.checklists.find((c) => c.id === checklistId)
+    if (!list) return
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return
+    list.items = list.items.filter((i) => i.id !== itemId)
+  })
+}
+
+function updateChecklistItem(checklistId, itemId, patch) {
+  return mutate((db) => {
+    const list = db.checklists.find((c) => c.id === checklistId)
+    if (!list) return
+    if (db.currentFamilyId && list.familyId !== db.currentFamilyId) return
+    const item = list.items.find((i) => i.id === itemId)
+    if (!item) return
+    Object.assign(item, patch)
   })
 }
 
 function nextSchedule(familyId) {
   const today = todayISO()
   const list = familySchedules(familyId)
-  return list.find((s) => s.date >= today) || list[0]
+  const enriched = list
+    .map((s) => {
+      const occ = nextOccurrence(s, today)
+      return occ ? Object.assign({}, s, { nextDate: occ }) : null
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.nextDate.localeCompare(b.nextDate))
+  return enriched[0] || null
+}
+
+
+function deleteVisit(id) {
+  return mutate((db) => {
+    const idx = db.visits.findIndex((v) => v.id === id)
+    if (idx < 0) return false
+    if (db.currentFamilyId && db.visits[idx].familyId !== db.currentFamilyId) return false
+    db.visits.splice(idx, 1)
+    return true
+  })
+}
+
+function deleteSchedule(id) {
+  return mutate((db) => {
+    const idx = db.schedules.findIndex((s) => s.id === id)
+    if (idx < 0) return false
+    if (db.currentFamilyId && db.schedules[idx].familyId !== db.currentFamilyId) return false
+    db.schedules.splice(idx, 1)
+    return true
+  })
+}
+
+function deleteGrave(id) {
+  return mutate((db) => {
+    const idx = db.graves.findIndex((g) => g.id === id)
+    if (idx < 0) return false
+    if (db.currentFamilyId && db.graves[idx].familyId !== db.currentFamilyId) return false
+    db.graves.splice(idx, 1)
+    db.visits = db.visits.filter((v) => v.graveId !== id)
+    db.schedules = db.schedules.filter((s) => s.graveId !== id)
+    db.checklists = db.checklists.filter((c) => c.graveId !== id)
+    return true
+  })
+}
+
+function myRole(familyId) {
+  const db = load()
+  if (!db.sessionUserId || !familyId) return null
+  const m = db.members.find((x) => x.familyId === familyId && x.userId === db.sessionUserId)
+  return m ? m.role : null
+}
+
+function canEditFamily(familyId) {
+  const role = myRole(familyId)
+  return role === 'owner' || role === 'editor'
+}
+
+function removeMember(familyId, userId) {
+  return mutate((db) => {
+    const me = db.sessionUserId
+    const my = db.members.find((m) => m.familyId === familyId && m.userId === me)
+    if (!my || my.role !== 'owner') return { ok: false, reason: '仅所有者可移除成员' }
+    const target = db.members.find((m) => m.familyId === familyId && m.userId === userId)
+    if (!target) return { ok: false, reason: '成员不存在' }
+    if (target.role === 'owner') return { ok: false, reason: '不能移除所有者' }
+    if (target.userId === me) return { ok: false, reason: '不能移除自己' }
+    db.members = db.members.filter((m) => !(m.familyId === familyId && m.userId === userId))
+    return { ok: true }
+  })
+}
+
+function setMemberRole(familyId, userId, role) {
+  return mutate((db) => {
+    const me = db.sessionUserId
+    const my = db.members.find((m) => m.familyId === familyId && m.userId === me)
+    if (!my || my.role !== 'owner') return { ok: false, reason: '仅所有者可改角色' }
+    if (role !== 'editor' && role !== 'viewer') return { ok: false, reason: '角色无效' }
+    const target = db.members.find((m) => m.familyId === familyId && m.userId === userId)
+    if (!target) return { ok: false, reason: '成员不存在' }
+    if (target.role === 'owner') return { ok: false, reason: '不能改所有者角色' }
+    target.role = role
+    return { ok: true }
+  })
+}
+
+function leaveFamily(familyId) {
+  return mutate((db) => {
+    const me = db.sessionUserId
+    const my = db.members.find((m) => m.familyId === familyId && m.userId === me)
+    if (!my) return { ok: false, reason: '不在该家庭' }
+    if (my.role === 'owner') {
+      const others = db.members.filter((m) => m.familyId === familyId && m.userId !== me)
+      if (others.length) return { ok: false, reason: '所有者请先移交或移除其他成员' }
+    }
+    db.members = db.members.filter((m) => !(m.familyId === familyId && m.userId === me))
+    if (db.currentFamilyId === familyId) {
+      const next = db.members.find((m) => m.userId === me)
+      db.currentFamilyId = next ? next.familyId : null
+    }
+    return { ok: true }
+  })
 }
 
 module.exports = {
@@ -466,6 +844,7 @@ module.exports = {
   createFamily,
   joinFamily,
   setCurrentFamily,
+  belongsToFamily,
   currentUser,
   currentFamily,
   myFamilies,
@@ -474,15 +853,30 @@ module.exports = {
   familyVisits,
   familySchedules,
   familyChecklists,
+  familyTemplates,
   getGrave,
   getVisit,
   getSchedule,
   getChecklist,
+  getTemplate,
   saveGrave,
   saveVisit,
   saveSchedule,
   toggleChecklistItem,
   resetChecklistFromTemplate,
+  cloneTemplateToChecklist,
   updateChecklistItems,
+  addChecklistItem,
+  deleteChecklistItem,
+  updateChecklistItem,
   nextSchedule,
+  TEMPLATE_ITEMS,
+  deleteVisit,
+  deleteSchedule,
+  deleteGrave,
+  myRole,
+  canEditFamily,
+  removeMember,
+  setMemberRole,
+  leaveFamily,
 }

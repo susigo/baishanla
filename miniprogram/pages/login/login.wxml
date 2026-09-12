@@ -7,8 +7,8 @@
     <view class="sprout-line">新芽</view>
     <view wx:if="{{pendingInvite}}" class="invite-chip mb-3">收到邀请，登录后将预填加入</view>
     <view class="card form-card">
-      <view class="muted mb-3">微信登录为本地会话占位，未接真实 code2session。</view>
-      <button class="btn-wx mb-4" bindtap="mockWx">微信一键登录</button>
+      <view class="muted mb-3">微信登录写入本机会话，退出后可重新进入。正式版将接 code2session。</view>
+      <button class="btn-wx mb-4" loading="{{wxBusy}}" bindtap="mockWx">微信一键登录</button>
       <view class="muted mb-3">或手机号验证码 · 演示码 123456</view>
       <view class="muted label">手机号</view>
       <input class="field mb-3" type="number" placeholder="请输入手机号" value="{{phone}}" bindinput="onPhone" />

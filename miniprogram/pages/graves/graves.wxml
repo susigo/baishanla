@@ -1,13 +1,14 @@
 <view class="page page-tab">
   <view class="row mb-3">
     <view class="h1">墓地</view>
-    <button class="btn-ghost" style="height:72rpx;" bindtap="goNew">＋ 新建</button>
+    <button wx:if="{{canEdit}}" class="btn-ghost" style="height:72rpx;" bindtap="goNew">＋ 新建</button>
   </view>
   <view wx:for="{{graves}}" wx:key="id" class="card grave-card" bindtap="goDetail" data-id="{{item.id}}">
-    <hills-art height="108" label="{{item.coverLabel}}" variant="{{item.variant}}" />
+    <hills-art height="116" label="{{item.coverLabel}}" cover-path="{{item.coverPath}}" motif="{{item.coverMotif}}" variant="{{item.variant}}" />
     <view class="grave-meta">
       <view class="grave-name">{{item.name}}</view>
       <view class="muted">{{item.memorialFor}}</view>
+      <view wx:if="{{item.note}}" class="muted note">{{item.note}}</view>
       <view wx:if="{{item.nextLabel}}" class="sage next">{{item.nextLabel}}</view>
     </view>
   </view>

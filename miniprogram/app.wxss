@@ -246,6 +246,7 @@ button::after {
   margin-bottom: 24rpx;
 }
 
+.mt-1 { margin-top: 8rpx; }
 .mt-2 { margin-top: 16rpx; }
 .mt-3 { margin-top: 24rpx; }
 .mt-4 { margin-top: 32rpx; }
@@ -369,13 +370,16 @@ button::after {
 .photo-add {
   aspect-ratio: 1;
   border-radius: 24rpx;
-  border: 2rpx dashed rgba(123, 175, 158, 0.5);
-  background: #F0EBE0;
+  border: 2rpx dashed rgba(123, 175, 158, 0.65);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(231, 184, 176, 0.25), transparent 55%),
+    linear-gradient(145deg, #E8F2EC, #F7F3EA);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #5F9483;
   font-size: 48rpx;
+  box-shadow: 0 8rpx 24rpx rgba(47, 58, 54, 0.04);
 }
 
 .item-row {

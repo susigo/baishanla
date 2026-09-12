@@ -8,12 +8,17 @@ Page({
     token: '',
     err: '',
     hasInvite: false,
+    force: false,
+    busy: false,
   },
   onLoad(q) {
     const invite = q && q.invite ? decodeURIComponent(q.invite) : ''
+    const force = !!(q && (q.force === '1' || q.force === 'true'))
     if (invite) {
       share.savePendingInvite(invite)
-      this.setData({ mode: 'join', token: invite, hasInvite: true })
+      this.setData({ mode: 'join', token: invite, hasInvite: true, force: force })
+    } else {
+      this.setData({ force: force })
     }
   },
   onShow() {
@@ -21,7 +26,7 @@ Page({
       wx.reLaunch({ url: '/pages/welcome/welcome' })
       return
     }
-    if (store.currentFamily()) {
+    if (store.currentFamily() && !this.data.force) {
       share.clearPendingInvite()
       wx.switchTab({ url: '/pages/home/home' })
       return
@@ -44,23 +49,30 @@ Page({
     this.setData({ token: e.detail.value })
   },
   submit() {
-    this.setData({ err: '' })
-    if (this.data.mode === 'create') {
-      if (!this.data.name.trim()) {
-        this.setData({ err: '请输入家庭名称' })
-        return
+    if (this.data.busy) return
+    this.setData({ err: '', busy: true })
+    try {
+      if (this.data.mode === 'create') {
+        if (!this.data.name.trim()) {
+          this.setData({ err: '请输入家庭名称', busy: false })
+          return
+        }
+        store.createFamily(this.data.name.trim())
+        share.clearPendingInvite()
+        wx.showToast({ title: '家庭已创建', icon: 'success' })
+        setTimeout(() => wx.switchTab({ url: '/pages/home/home' }), 350)
+      } else {
+        const f = store.joinFamily(this.data.token)
+        if (!f) {
+          this.setData({ err: '邀请码无效（演示可用 INVITE-XIAOLIN）', busy: false })
+          return
+        }
+        share.clearPendingInvite()
+        wx.showToast({ title: '已加入 ' + f.name, icon: 'success' })
+        setTimeout(() => wx.switchTab({ url: '/pages/home/home' }), 350)
       }
-      store.createFamily(this.data.name.trim())
-      share.clearPendingInvite()
-      wx.switchTab({ url: '/pages/home/home' })
-    } else {
-      const f = store.joinFamily(this.data.token)
-      if (!f) {
-        this.setData({ err: '邀请码无效（演示可用 INVITE-XIAOLIN）' })
-        return
-      }
-      share.clearPendingInvite()
-      wx.switchTab({ url: '/pages/home/home' })
+    } catch (e) {
+      this.setData({ err: (e && e.message) || '操作失败', busy: false })
     }
   },
 })

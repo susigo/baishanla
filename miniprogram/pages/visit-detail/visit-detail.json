@@ -1,5 +1,8 @@
 {
-  "navigationBarTitleText": "记录详情",
+  "navigationBarTitleText": "看望记录",
   "enableShareAppMessage": true,
-  "enableShareTimeline": true
+  "enableShareTimeline": true,
+  "usingComponents": {
+    "empty-state": "/components/empty-state/empty-state"
+  }
 }

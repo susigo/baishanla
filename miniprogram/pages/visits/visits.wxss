@@ -1,3 +1,37 @@
-.visit-row { display: flex; gap: 24rpx; align-items: center; margin-bottom: 16rpx; }
+.sub { font-size: 22rpx; margin-top: 6rpx; }
+.year-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+.year {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #5F9483;
+  letter-spacing: 2rpx;
+}
+.visit-row { display: flex; gap: 24rpx; align-items: flex-start; margin-bottom: 16rpx; }
+.thumb-img {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 24rpx;
+  flex-shrink: 0;
+  box-shadow: 0 8rpx 20rpx rgba(47, 58, 54, 0.06);
+}
 .visit-body { flex: 1; min-width: 0; }
-.ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.title { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.date { font-size: 22rpx; flex-shrink: 0; }
+.ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 6rpx; }
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 10rpx;
+}
+.author { font-size: 22rpx; }
+.chip.mini {
+  height: 40rpx;
+  padding: 0 14rpx;
+  font-size: 20rpx;
+}
