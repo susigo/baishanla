@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { RotateCcw, Plus } from 'lucide-react'
 import { PageHeader } from '../components/PageHeader'
 import { useDB } from '../lib/useDB'
 import {
@@ -69,7 +70,9 @@ export function ChecklistPage() {
                   }}
                 />
               ) : (
-                <div className="font-semibold">{item.name}</div>
+                <div className={`font-semibold ${item.checked ? 'text-ink2' : ''}`}>
+                  {item.name}
+                </div>
               )}
               <div className="text-ink2 text-[13px] mt-0.5">
                 ×{item.qty}
@@ -85,7 +88,7 @@ export function ChecklistPage() {
       {editing ? (
         <button
           type="button"
-          className="btn-secondary mt-4 mb-2"
+          className="btn-secondary mt-4 mb-2 gap-2"
           onClick={() => {
             updateChecklistItems(list.id, [
               ...list.items,
@@ -100,15 +103,17 @@ export function ChecklistPage() {
             ])
           }}
         >
+          <Plus size={16} strokeWidth={2.25} aria-hidden />
           添加一项
         </button>
       ) : null}
 
       <button
         type="button"
-        className="btn-secondary mt-4 mb-2"
+        className="btn-secondary mt-4 mb-2 gap-2"
         onClick={() => resetChecklistFromTemplate(list.id)}
       >
+        <RotateCcw size={16} strokeWidth={2} aria-hidden />
         从模板重置
       </button>
     </div>

@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
+import { Plus } from 'lucide-react'
 import { PageHeader } from '../components/PageHeader'
+import { EmptyState } from '../components/EmptyState'
 import { useDB } from '../lib/useDB'
 import { currentFamily, familySchedules, getGrave } from '../lib/store'
 
@@ -13,7 +15,8 @@ export function Schedules() {
       <PageHeader
         title="排程"
         right={
-          <Link to="/schedules/new" className="text-sage-dark">
+          <Link to="/schedules/new" className="text-sage-dark flex items-center gap-1">
+            <Plus size={14} strokeWidth={2.25} aria-hidden />
             新建
           </Link>
         }
@@ -40,7 +43,14 @@ export function Schedules() {
             </div>
           )
         })}
-        {!schedules.length ? <p className="text-ink2 text-center py-8">暂无排程</p> : null}
+        {!schedules.length ? (
+          <EmptyState
+            title="暂无排程"
+            description="把清明、忌日记下来，到时候轻轻提醒家人。"
+            actionLabel="新建排程"
+            actionTo="/schedules/new"
+          />
+        ) : null}
       </div>
     </div>
   )

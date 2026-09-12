@@ -1,24 +1,34 @@
 import { NavLink } from 'react-router-dom'
+import { Home, MapPinned, BookOpen, User } from 'lucide-react'
 
 const tabs = [
-  { to: '/', label: '首页', end: true },
-  { to: '/graves', label: '墓地' },
-  { to: '/visits', label: '记录' },
-  { to: '/me', label: '我的' },
+  { to: '/', label: '首页', end: true, Icon: Home },
+  { to: '/graves', label: '墓地', Icon: MapPinned },
+  { to: '/visits', label: '记录', Icon: BookOpen },
+  { to: '/me', label: '我的', Icon: User },
 ]
 
 export function BottomTabs() {
   return (
     <nav className="tab-bar">
-      {tabs.map((t) => (
+      {tabs.map(({ to, label, end, Icon }) => (
         <NavLink
-          key={t.to}
-          to={t.to}
-          end={t.end}
+          key={to}
+          to={to}
+          end={end}
           className={({ isActive }) => `tab-item${isActive ? ' on' : ''}`}
         >
-          <span className="tab-icon" />
-          {t.label}
+          {({ isActive }) => (
+            <>
+              <Icon
+                size={22}
+                strokeWidth={isActive ? 2.25 : 1.75}
+                color={isActive ? '#7BAF9E' : '#6B776F'}
+                absoluteStrokeWidth
+              />
+              <span>{label}</span>
+            </>
+          )}
         </NavLink>
       ))}
     </nav>

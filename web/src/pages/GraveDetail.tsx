@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import { MoreHorizontal, Navigation, PenLine, ListChecks, CalendarDays } from 'lucide-react'
 import { PageHeader } from '../components/PageHeader'
 import { HillsArt } from '../components/HillsArt'
 import { useDB } from '../lib/useDB'
@@ -36,12 +37,12 @@ export function GraveDetail() {
       <PageHeader
         title=""
         right={
-          <Link to={`/graves/${grave.id}/edit`} className="text-lg px-2">
-            ⋯
+          <Link to={`/graves/${grave.id}/edit`} className="w-10 h-10 flex items-center justify-center text-ink">
+            <MoreHorizontal size={22} />
           </Link>
         }
       />
-      <HillsArt height={130} label={grave.coverLabel} />
+      <HillsArt height={140} label={grave.coverLabel} />
       <h1 className="text-[20px] font-semibold mt-3">{grave.name}</h1>
       <p className="text-ink2 text-[13px] mt-1">
         {grave.memorialFor}
@@ -50,23 +51,27 @@ export function GraveDetail() {
 
       <div className="grid grid-cols-2 gap-2 mt-4">
         <a
-          className="btn-ghost"
+          className="btn-ghost gap-1.5"
           href={mapsNavigateUrl(grave)}
           target="_blank"
           rel="noreferrer"
         >
+          <Navigation size={16} strokeWidth={2} />
           导航
         </a>
-        <Link to={`/visits/new?graveId=${grave.id}`} className="btn-primary h-10 text-sm">
+        <Link to={`/visits/new?graveId=${grave.id}`} className="btn-primary h-10 text-sm gap-1.5 shadow-none">
+          <PenLine size={16} strokeWidth={2} />
           记一笔
         </Link>
         <Link
           to={lists[0] ? `/checklists/${lists[0].id}` : '/schedules'}
-          className="btn-dashed"
+          className="btn-dashed gap-1.5"
         >
+          <ListChecks size={16} strokeWidth={2} />
           清单
         </Link>
-        <Link to="/schedules" className="btn-dashed">
+        <Link to="/schedules" className="btn-dashed gap-1.5">
+          <CalendarDays size={16} strokeWidth={2} />
           排程
         </Link>
       </div>
@@ -76,7 +81,7 @@ export function GraveDetail() {
         <div className="text-ink2 text-[13px]">{recentLabel || '暂无记录'}</div>
       </div>
 
-      <div className="card mt-3 border border-dashed border-sage">
+      <div className="card mt-3 border border-dashed border-sage/70 bg-transparent shadow-none">
         {grave.lat != null ? '定位已保存 · 打开地图可微调' : '尚未定位 · 编辑时可添加'}
       </div>
 

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ChevronDown, PenLine } from 'lucide-react'
 import { useDB } from '../lib/useDB'
 import {
   currentFamily,
@@ -8,6 +9,8 @@ import {
   getGrave,
   nextSchedule,
 } from '../lib/store'
+import { CoverThumb } from '../components/HillsArt'
+import { EmptyState } from '../components/EmptyState'
 
 export function Home() {
   useDB()
@@ -28,8 +31,9 @@ export function Home() {
   return (
     <div className="px-5 pt-4">
       <div className="flex items-center justify-between mb-3">
-        <div className="font-semibold text-[16px]">
-          {family.name} <span className="text-ink2 text-xs">▾</span>
+        <div className="font-semibold text-[16px] flex items-center gap-1">
+          {family.name}
+          <ChevronDown size={16} className="text-ink2" strokeWidth={2} />
         </div>
         <Link to="/me/members" className="chip">
           成员 {members.length}
@@ -38,7 +42,7 @@ export function Home() {
 
       <div className="card-sage mb-3">
         <div className="text-ink2 text-[13px]">下一场拜山</div>
-        <div className="text-[20px] font-semibold mt-1.5 mb-1">{dateLabel}</div>
+        <div className="text-[20px] font-semibold mt-1.5 mb-1 text-ink">{dateLabel}</div>
         <div className="text-ink2 text-[13px]">
           {grave?.name ?? '家庭'} · 负责人 {next?.assignee ?? '—'}
         </div>
@@ -52,7 +56,8 @@ export function Home() {
         </div>
       </div>
 
-      <Link to="/visits/new" className="btn-primary mb-3">
+      <Link to="/visits/new" className="btn-primary mb-3 gap-2">
+        <PenLine size={18} strokeWidth={2} />
         记一笔
       </Link>
 
@@ -72,11 +77,11 @@ export function Home() {
 
       <div className="text-ink2 text-[13px] mb-2">最近记录</div>
       <div className="space-y-2">
-        {recent.map((v) => {
+        {recent.map((v, idx) => {
           const g = getGrave(v.graveId)
           return (
             <Link key={v.id} to={`/visits/${v.id}`} className="card flex gap-3 items-start">
-              <span className="w-7 h-7 rounded-full bg-blush shrink-0 mt-0.5" />
+              <CoverThumb size={40} motif={idx % 2 === 0 ? 'floral' : 'hills'} />
               <div className="flex-1 min-w-0">
                 <div className="flex justify-between gap-2">
                   <span className="font-semibold truncate">{v.title || '看望'}</span>
@@ -89,7 +94,14 @@ export function Home() {
             </Link>
           )
         })}
-        {!recent.length ? <p className="text-ink2 text-sm py-4 text-center">还没有记录</p> : null}
+        {!recent.length ? (
+          <EmptyState
+            title="还没有记录"
+            description="清明前后，把一次看望轻轻记下来。"
+            actionLabel="记一笔"
+            actionTo="/visits/new"
+          />
+        ) : null}
       </div>
     </div>
   )

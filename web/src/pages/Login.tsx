@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageHeader } from '../components/PageHeader'
+import { HillsArt } from '../components/HillsArt'
+import { SoftDecor } from '../components/EmptyState'
 import { loginWithPhone, currentFamily } from '../lib/store'
 
 export function Login() {
@@ -29,35 +31,41 @@ export function Login() {
   }
 
   return (
-    <div className="px-5 pt-2 safe-bottom min-h-dvh flex flex-col">
-      <PageHeader title="登录" />
-      <p className="text-ink2 text-sm mb-6 px-1">手机号验证码登录 · 演示码 123456</p>
-      <label className="text-xs text-ink2 mb-1 px-1">手机号</label>
-      <input
-        className="field mb-3"
-        inputMode="tel"
-        placeholder="请输入手机号"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value.trim())}
-      />
-      <label className="text-xs text-ink2 mb-1 px-1">验证码</label>
-      <div className="flex gap-2 mb-2">
+    <div className="px-5 pt-2 safe-bottom min-h-dvh flex flex-col relative overflow-hidden">
+      <SoftDecor />
+      <div className="relative z-10 flex flex-col flex-1">
+        <PageHeader title="登录" />
+        <div className="mb-5 mt-1">
+          <HillsArt height={100} />
+        </div>
+        <p className="text-ink2 text-sm mb-5 px-1">手机号验证码登录 · 演示码 123456</p>
+        <label className="text-xs text-ink2 mb-1 px-1">手机号</label>
         <input
-          className="field flex-1"
-          inputMode="numeric"
-          placeholder="6 位验证码"
-          value={code}
-          onChange={(e) => setCode(e.target.value.trim())}
+          className="field mb-3"
+          inputMode="tel"
+          placeholder="请输入手机号"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value.trim())}
         />
-        <button type="button" className="btn-ghost shrink-0" onClick={sendCode}>
-          {sent ? '已发送' : '获取验证码'}
+        <label className="text-xs text-ink2 mb-1 px-1">验证码</label>
+        <div className="flex gap-2 mb-2">
+          <input
+            className="field flex-1"
+            inputMode="numeric"
+            placeholder="6 位验证码"
+            value={code}
+            onChange={(e) => setCode(e.target.value.trim())}
+          />
+          <button type="button" className="btn-ghost shrink-0" onClick={sendCode}>
+            {sent ? '已发送' : '获取验证码'}
+          </button>
+        </div>
+        {err ? <p className="text-blush text-sm mb-2">{err}</p> : null}
+        {sent ? <p className="text-sage-dark text-xs mb-4">已发送（演示）：123456</p> : null}
+        <button type="button" className="btn-primary mt-4" onClick={submit}>
+          登录
         </button>
       </div>
-      {err ? <p className="text-blush text-sm mb-2">{err}</p> : null}
-      {sent ? <p className="text-sage-dark text-xs mb-4">已发送（演示）：123456</p> : null}
-      <button type="button" className="btn-primary mt-4" onClick={submit}>
-        登录
-      </button>
     </div>
   )
 }

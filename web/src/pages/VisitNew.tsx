@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { PageHeader } from '../components/PageHeader'
+import { CoverThumb } from '../components/HillsArt'
 import { useDB } from '../lib/useDB'
 import {
   currentFamily,
@@ -45,7 +46,6 @@ export function VisitNew() {
     const next: string[] = []
     for (const f of Array.from(files).slice(0, 6 - photos.length)) {
       if (f.size > 800_000) {
-        // shrink via canvas-ish: still store as object URL for large
         next.push(URL.createObjectURL(f))
       } else {
         next.push(await fileToDataUrl(f))
@@ -117,7 +117,7 @@ export function VisitNew() {
 
       <div className="text-ink2 text-[13px] mb-2">照片 / 视频</div>
       <div className="grid grid-cols-3 gap-2 mb-4">
-        <label className="aspect-square rounded-xl border border-dashed border-ink2/40 bg-muted-surface flex items-center justify-center text-2xl text-ink2 cursor-pointer">
+        <label className="aspect-square rounded-xl border border-dashed border-sage/50 bg-muted-surface flex items-center justify-center text-2xl text-sage-dark cursor-pointer">
           +
           <input
             type="file"
@@ -128,14 +128,14 @@ export function VisitNew() {
           />
         </label>
         {photos.map((src, i) => (
-          <div key={i} className="aspect-square rounded-xl overflow-hidden bg-sage/30">
+          <div key={i} className="aspect-square rounded-xl overflow-hidden">
             <img src={src} alt="" className="w-full h-full object-cover" />
           </div>
         ))}
         {!photos.length ? (
           <>
-            <div className="aspect-square rounded-xl bg-sage/35" />
-            <div className="aspect-square rounded-xl bg-blush/50" />
+            <CoverThumb size={undefined as unknown as number} motif="sage" />
+            <CoverThumb size={undefined as unknown as number} motif="blush" />
           </>
         ) : null}
       </div>

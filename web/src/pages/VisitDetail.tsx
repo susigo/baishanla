@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { PageHeader } from '../components/PageHeader'
+import { CoverPlaceholder } from '../components/CoverPlaceholder'
 import { useDB } from '../lib/useDB'
 import { getGrave, getVisit } from '../lib/store'
 
@@ -33,8 +34,8 @@ export function VisitDetail() {
         </div>
       ) : (
         <div className="mt-5 grid grid-cols-2 gap-2">
-          <div className="aspect-video rounded-xl bg-sage/30" />
-          <div className="aspect-video rounded-xl bg-blush/40" />
+          <CoverPlaceholder variant="photo" tone="sage" className="aspect-video" />
+          <CoverPlaceholder variant="photo" tone="blush" className="aspect-video" />
         </div>
       )}
     </div>

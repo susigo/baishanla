@@ -1,7 +1,7 @@
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { HillsArt } from '../components/HillsArt'
+import { SproutDivider } from '../components/EmptyState'
 import { currentFamily, currentUser, enterDemo } from '../lib/store'
-import { useNavigate } from 'react-router-dom'
 
 export function Welcome() {
   const nav = useNavigate()
@@ -13,13 +13,9 @@ export function Welcome() {
         <HillsArt height={200} />
       </div>
       <div className="text-center mt-6">
-        <h1 className="text-[32px] font-semibold tracking-wide text-sage">拜山啦</h1>
+        <h1 className="text-[32px] font-semibold tracking-wide text-sage-dark">拜山啦</h1>
         <p className="text-ink mt-2 text-[15px]">把看望，轻轻记下来</p>
-        <div className="flex items-center justify-center gap-3 mt-4">
-          <span className="h-px w-12 bg-blush/70" />
-          <span className="text-sage text-sm">❀</span>
-          <span className="h-px w-12 bg-blush/70" />
-        </div>
+        <SproutDivider />
       </div>
       <div className="mt-auto space-y-3 pb-4 pt-10">
         <Link to="/login" className="btn-primary">
