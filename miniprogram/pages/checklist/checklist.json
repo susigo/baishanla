@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "物资清单"
+  "navigationBarTitleText": "物资清单",
+  "usingComponents": {
+    "empty-state": "/components/empty-state/empty-state"
+  }
 }

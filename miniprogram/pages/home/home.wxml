@@ -1,48 +1,56 @@
-<view class="page page-tab">
-  <view class="row family-row mb-3">
-    <view class="family-name" bindtap="goMe">{{familyName}} <text class="chev">⌄</text></view>
-    <view class="chip" bindtap="goMembers">成员 {{memberCount}}</view>
-  </view>
-
-  <view class="hero-next card-sage mb-3">
-    <view class="hero-kicker">下一场拜山</view>
-    <view class="hero-date">{{dateLabel}}</view>
-    <view class="hero-meta">{{nextMeta}}</view>
-    <view class="chip-row">
-      <view wx:if="{{remindLabel}}" class="chip">{{remindLabel}}</view>
-      <view class="chip" bindtap="goSchedules">看排程</view>
-      <view class="chip {{subscribed ? 'chip-on' : ''}}" bindtap="goSchedules">{{subscribed ? '已预约提醒' : '开启提醒'}}</view>
+<view class="page page-tab spring">
+  <view class="relative">
+    <view class="row family-row mb-3">
+      <view class="family-name" bindtap="goMe">{{familyName}} <text class="chev">⌄</text></view>
+      <view class="chip" bindtap="goMembers">成员 {{memberCount}}</view>
     </view>
-  </view>
 
-  <button class="btn-primary btn-note mb-3" bindtap="goVisitNew">
-    <text class="note-ico">✎</text>
-    <text>记一笔</text>
-  </button>
-
-  <view wx:if="{{listId}}" class="card progress-card mb-4" bindtap="goChecklist">
-    <view class="row">
-      <view>
-        <view class="progress-title">{{listTitle}}</view>
-        <view class="muted progress-sub">轻轻勾掉要带的东西</view>
+    <view class="hero-next card-sage mb-3">
+      <view class="hero-kicker">下一场拜山</view>
+      <view class="hero-date">{{dateLabel}}</view>
+      <view class="hero-meta">{{nextMeta}}</view>
+      <view wx:if="{{countdown}}" class="countdown">{{countdown}}</view>
+      <view class="chip-row">
+        <view wx:if="{{remindLabel}}" class="chip">{{remindLabel}}</view>
+        <view class="chip" bindtap="goSchedules">看排程</view>
+        <view class="chip {{subscribed ? 'chip-on' : ''}}" bindtap="goSchedules">{{subscribed ? '已预约提醒' : '开启提醒'}}</view>
       </view>
-      <view class="progress-count">{{checked}}/{{total}}</view>
     </view>
-    <view class="progress">
-      <view class="progress-bar" style="width: {{progress}}%;"></view>
-    </view>
-  </view>
 
-  <view class="muted section-label mb-2">最近记录</view>
-  <view wx:for="{{recent}}" wx:key="id" class="card recent" bindtap="goVisit" data-id="{{item.id}}">
-    <cover-thumb size="40" motif="{{item.motif}}" />
-    <view class="recent-body">
+    <button class="btn-primary btn-note mb-3" bindtap="goVisitNew">
+      <text class="note-ico">✎</text>
+      <text>记一笔</text>
+    </button>
+
+    <view wx:if="{{listId}}" class="card progress-card mb-4" bindtap="goChecklist">
       <view class="row">
-        <view class="recent-title">{{item.title}}</view>
-        <view class="muted" style="font-size:22rpx;">{{item.graveShort}}</view>
+        <view>
+          <view class="progress-title">{{listTitle}}</view>
+          <view class="muted progress-sub">轻轻勾掉要带的东西</view>
+        </view>
+        <view class="progress-count">{{checked}}/{{total}}</view>
       </view>
-      <view wx:if="{{item.body}}" class="muted ellipsis">{{item.body}}</view>
+      <view class="progress">
+        <view class="progress-bar" style="width: {{progress}}%;"></view>
+      </view>
     </view>
+    <view wx:else class="card-dash mb-4" bindtap="goSchedules">
+      还没有物资清单 · 从排程或模板生成一份
+    </view>
+
+    <view class="muted section-label mb-2">最近记录</view>
+    <view wx:for="{{recent}}" wx:key="id" class="card recent" bindtap="goVisit" data-id="{{item.id}}">
+      <image wx:if="{{item.photo}}" class="recent-photo" src="{{item.photo}}" mode="aspectFill" />
+      <cover-thumb wx:else size="44" motif="{{item.motif}}" />
+      <view class="recent-body">
+        <view class="row">
+          <view class="recent-title">{{item.title}}</view>
+          <view class="muted side">{{item.graveShort}}</view>
+        </view>
+        <view wx:if="{{item.body}}" class="muted ellipsis">{{item.body}}</view>
+        <view class="muted date-line">{{item.dateShort}}</view>
+      </view>
+    </view>
+    <empty-state wx:if="{{!recent.length}}" title="还没有记录" description="清明前后，把一次看望轻轻记下来。" action-label="记一笔" bind:action="goVisitNew" />
   </view>
-  <empty-state wx:if="{{!recent.length}}" title="还没有记录" description="清明前后，把一次看望轻轻记下来。" action-label="记一笔" bind:action="goVisitNew" />
 </view>

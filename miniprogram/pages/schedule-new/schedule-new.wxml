@@ -1,16 +1,61 @@
 <view class="page">
+  <view class="muted label">类型</view>
   <picker mode="selector" range="{{types}}" value="{{typeIndex}}" bindchange="onType">
-    <view class="field mb-3">类型 · {{types[typeIndex]}}</view>
+    <view class="field field-row mb-3">
+      <text>{{types[typeIndex]}}</text>
+      <text class="chev">▾</text>
+    </view>
   </picker>
+  <input wx:if="{{types[typeIndex] === '自定义'}}" class="field mb-3" placeholder="自定义名称" value="{{customTitle}}" bindinput="onCustom" />
+
+  <view class="muted label">日期</view>
   <picker mode="date" value="{{date}}" bindchange="onDate">
-    <view class="field mb-3">日期 · {{date}}</view>
+    <view class="field field-row mb-3">
+      <text>{{date}}</text>
+      <text class="chev">▾</text>
+    </view>
   </picker>
+
+  <view class="muted label">绑定墓地</view>
   <picker mode="selector" range="{{graveNames}}" value="{{graveIndex}}" bindchange="onGrave">
-    <view class="field mb-3">{{graveNames[graveIndex]}}</view>
+    <view class="field field-row mb-3">
+      <text>{{graveNames[graveIndex]}}</text>
+      <text class="chev">▾</text>
+    </view>
   </picker>
-  <input class="field mb-3" placeholder="负责人" value="{{assignee}}" bindinput="onAssignee" />
+
+  <view class="muted label">负责人</view>
+  <picker wx:if="{{members.length}}" mode="selector" range="{{members}}" bindchange="onAssigneePick">
+    <view class="field field-row mb-3">
+      <text>{{assignee || '选择成员'}}</text>
+      <text class="chev">▾</text>
+    </view>
+  </picker>
+  <input wx:else class="field mb-3" placeholder="负责人" value="{{assignee}}" bindinput="onAssignee" />
+
+  <view class="muted label">重复</view>
   <picker mode="selector" range="{{rules}}" value="{{ruleIndex}}" bindchange="onRule">
-    <view class="field mb-4">重复 · {{rules[ruleIndex]}}</view>
+    <view class="field field-row mb-3">
+      <text>{{rules[ruleIndex]}}</text>
+      <text class="chev">▾</text>
+    </view>
   </picker>
-  <button class="btn-primary" bindtap="save">保存</button>
+
+  <view class="muted label mb-2">提前提醒（可多选）</view>
+  <view class="chip-row mb-4">
+    <view
+      wx:for="{{remindChips}}"
+      wx:key="d"
+      class="chip {{item.on ? 'chip-on' : ''}}"
+      data-d="{{item.d}}"
+      bindtap="toggleRemind"
+    >提前 {{item.d}} 天</view>
+  </view>
+
+  <view class="card row mb-4" bindtap="toggleClone">
+    <view class="check {{cloneList ? 'on' : ''}}"></view>
+    <view>同时从模板生成物资清单</view>
+  </view>
+
+  <button class="btn-primary" bindtap="save">保存排程</button>
 </view>

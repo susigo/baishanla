@@ -1,5 +1,6 @@
 .chip-row { display: flex; gap: 16rpx; flex-wrap: wrap; margin-top: 16rpx; }
-
+.sched-title { font-weight: 600; font-size: 30rpx; }
+.del { margin-top: 16rpx; color: #C45C5C; font-size: 24rpx; }
 .sub-card {
   background: linear-gradient(145deg, #E5F0EB 0%, #F4F8F5 55%, #F7F3EA 100%);
   border-radius: 32rpx;

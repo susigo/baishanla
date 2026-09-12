@@ -4,5 +4,23 @@
   letter-spacing: 2rpx;
   font-size: 34rpx;
   margin: 12rpx 0 8rpx;
+  color: #2F3A36;
 }
-.invite-hint { font-size: 22rpx; line-height: 1.5; }
+.invite-hint { font-size: 22rpx; line-height: 1.55; }
+.section { letter-spacing: 2rpx; font-size: 24rpx; }
+.member-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+.left { display: flex; align-items: center; gap: 20rpx; min-width: 0; }
+.avatar.sm {
+  width: 72rpx;
+  height: 72rpx;
+  font-size: 28rpx;
+}
+.name { font-weight: 600; }
+.me { color: #6B776F; font-weight: 400; font-size: 24rpx; }
+.joined { font-size: 22rpx; margin-top: 4rpx; }
+.tip { font-size: 22rpx; margin-top: 8rpx; }

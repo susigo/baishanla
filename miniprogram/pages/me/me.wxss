@@ -1,1 +1,15 @@
-.relative { position: relative; z-index: 1; }
+.profile {
+  display: flex;
+  gap: 24rpx;
+  align-items: center;
+}
+.profile-body { flex: 1; min-width: 0; }
+.name { font-weight: 600; font-size: 34rpx; }
+.role { margin-top: 12rpx; }
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+.menu-title { font-weight: 600; margin-top: 8rpx; }

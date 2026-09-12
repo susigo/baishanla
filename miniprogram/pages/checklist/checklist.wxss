@@ -1,5 +1,28 @@
-.flex1 { flex: 1; }
+.checklist { padding-bottom: 80rpx; }
+.progress-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 48rpx;
+  padding: 0 20rpx;
+  border-radius: 999rpx;
+  background: #E5F0EB;
+  color: #5F9483;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+.flex1 { flex: 1; min-width: 0; }
 .item-name { font-weight: 600; font-size: 30rpx; }
-.item-name.done { color: #6B776F; }
+.item-name.done { color: #6B776F; text-decoration: line-through; text-decoration-color: #B7D0C4; }
 .caption { margin-top: 6rpx; font-size: 24rpx; }
-.item-row { padding: 32rpx 0; align-items: center; }
+.item-row { padding: 28rpx 0; align-items: flex-start; }
+.edit-row {
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.qty { width: 140rpx; min-height: 72rpx; padding: 12rpx 20rpx; }
+.chip.danger {
+  color: #C45C5C;
+  border-color: rgba(196, 92, 92, 0.35);
+}

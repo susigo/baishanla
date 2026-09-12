@@ -1,7 +1,10 @@
-.body { margin-top: 32rpx; font-size: 30rpx; line-height: 1.7; white-space: pre-wrap; }
-.photo-wide { aspect-ratio: 16/10; border-radius: 24rpx; }
-.blush-tone {
-  background:
-    radial-gradient(circle at 70% 30%, rgba(231,184,176,0.5), transparent 50%),
-    linear-gradient(160deg, #F6E8E5, #F7F3EA);
+.top { align-items: flex-start; }
+.grow { flex: 1; min-width: 0; }
+.body {
+  margin-top: 32rpx;
+  font-size: 30rpx;
+  line-height: 1.75;
+  white-space: pre-wrap;
 }
+.photo-img { border-radius: 24rpx; box-shadow: 0 12rpx 28rpx rgba(47, 58, 54, 0.06); }
+.danger { color: #C45C5C; }

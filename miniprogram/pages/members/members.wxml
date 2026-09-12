@@ -2,15 +2,21 @@
   <view class="card invite-card mb-4">
     <view class="muted">邀请家人加入{{familyName}}</view>
     <view class="token">{{token}}</view>
-    <view class="muted invite-hint">分享卡片带上邀请码；对方打开后可预填加入。演示无服务端校验。</view>
+    <view class="muted invite-hint">点「邀请家人」发微信卡片；对方打开后预填邀请码。也可复制码手动发给长辈。</view>
     <button class="btn-primary mt-3" open-type="share">邀请家人</button>
     <button class="btn-secondary mt-3" bindtap="copy">{{copied ? '已复制' : '复制邀请码'}}</button>
   </view>
-  <view wx:for="{{members}}" wx:key="userId" class="card row mb-3">
-    <view>
-      <view style="font-weight:600;">{{item.nickname}}</view>
-      <view class="muted" style="font-size:22rpx;margin-top:4rpx;">加入于 {{item.joinedAt}}</view>
+
+  <view class="muted section mb-2">成员与角色</view>
+  <view wx:for="{{members}}" wx:key="userId" class="card member-row mb-3" bindtap="manage" data-id="{{item.userId}}">
+    <view class="left">
+      <view class="avatar sm" style="background: {{item.avatarColor}};">{{item.avatarChar}}</view>
+      <view>
+        <view class="name">{{item.nickname}}<text wx:if="{{item.isMe}}" class="me"> · 我</text></view>
+        <view class="muted joined">加入于 {{item.joinedAt}}</view>
+      </view>
     </view>
-    <view class="chip">{{item.roleLabel}}</view>
+    <view class="chip {{item.role === 'owner' ? 'chip-on' : ''}}">{{item.roleLabel}}<text wx:if="{{item.canManage}}"> ›</text></view>
   </view>
+  <view wx:if="{{isOwner}}" class="muted tip">点成员可改角色或移除（仅所有者）</view>
 </view>

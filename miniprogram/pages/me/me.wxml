@@ -1,33 +1,42 @@
 <view class="page page-tab spring">
   <view class="relative">
     <view class="h1 mb-4">我的</view>
-    <view class="card row mb-3" style="justify-content:flex-start;gap:24rpx;">
+    <view class="card profile mb-3">
       <view class="avatar" style="background: {{user.avatarColor || '#7BAF9E'}};">{{user.avatarChar}}</view>
-      <view>
-        <view style="font-weight:600;">{{user.nickname}}</view>
+      <view class="profile-body">
+        <view class="name">{{user.nickname}}</view>
         <view class="muted">{{user.phone === 'wx-mock' ? '微信登录（本地会话）' : user.phone}}</view>
+        <view class="chip role">{{family.name}} · {{roleLabel}}</view>
       </view>
     </view>
-    <picker wx:if="{{families.length > 1}}" mode="selector" range="{{familyNames}}" value="{{familyIndex}}" bindchange="onFamily">
-      <view class="card mb-3">
-        <view class="muted">当前家庭</view>
-        <view style="font-weight:600;" class="mt-2">{{family.name}} ⌄</view>
-        <view class="sprout-line">春</view>
+
+    <picker mode="selector" range="{{familyNames}}" value="{{familyIndex}}" bindchange="onFamily">
+      <view class="card menu mb-3">
+        <view>
+          <view class="muted">当前家庭</view>
+          <view class="menu-title">{{family.name}} ⌄</view>
+        </view>
+        <view class="muted">切换</view>
       </view>
     </picker>
-    <view wx:else class="card mb-3">
-      <view class="muted">当前家庭</view>
-      <view style="font-weight:600;" class="mt-2">{{family.name}}</view>
-      <view class="sprout-line">春</view>
-    </view>
-    <view class="card row mb-3" bindtap="goMembers">
+
+    <view class="card menu mb-3" bindtap="goMembers">
       <view>成员与邀请</view>
       <view class="muted">{{memberCount}} 人 ›</view>
     </view>
-    <view class="card mb-3 muted" style="line-height:1.6;">
-      <view class="ink mb-2" style="font-weight:600;">关于拜山啦</view>
-      把看望，轻轻记下来。小程序原型，数据保存在本机 wx.storage。分享卡片已接通（无服务端校验）；订阅提醒为表现层（touristappid 仅演示）。
+    <view class="card menu mb-3" bindtap="goFamily">
+      <view>创建 / 加入家庭</view>
+      <view class="muted">›</view>
     </view>
+    <view class="card menu mb-3" bindtap="goAbout">
+      <view>关于拜山啦</view>
+      <view class="muted">›</view>
+    </view>
+    <view class="card menu mb-4" bindtap="goPrivacy">
+      <view>隐私说明</view>
+      <view class="muted">›</view>
+    </view>
+
     <button class="btn-secondary mb-3" bindtap="logout">退出登录</button>
     <button class="btn-text" bindtap="reset">重置演示数据</button>
   </view>

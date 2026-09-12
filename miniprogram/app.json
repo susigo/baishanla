@@ -14,7 +14,8 @@
     "pages/schedules/schedules",
     "pages/schedule-new/schedule-new",
     "pages/checklist/checklist",
-    "pages/members/members"
+    "pages/members/members",
+    "pages/about/about"
   ],
   "window": {
     "backgroundColor": "#F7F3EA",
@@ -57,5 +58,14 @@
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于选择墓地位置并打开系统导航"
+    }
+  },
+  "requiredPrivateInfos": [
+    "chooseLocation",
+    "getLocation"
+  ]
 }

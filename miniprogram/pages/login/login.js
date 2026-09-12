@@ -9,6 +9,7 @@ Page({
     sent: false,
     err: '',
     pendingInvite: '',
+    wxBusy: false,
   },
   onLoad(q) {
     if (q && q.invite) share.savePendingInvite(q.invite)
@@ -38,10 +39,13 @@ Page({
     auth.afterLogin()
   },
   mockWx() {
+    if (this.data.wxBusy) return
+    this.setData({ wxBusy: true })
     wx.showLoading({ title: '登录中', mask: true })
     setTimeout(() => {
       wx.hideLoading()
       store.loginWeChat()
+      this.setData({ wxBusy: false })
       auth.afterLogin()
     }, 400)
   },

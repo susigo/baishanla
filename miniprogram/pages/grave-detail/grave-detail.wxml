@@ -1,35 +1,35 @@
 <view class="page" wx:if="{{missing}}">
-  <view class="muted">未找到</view>
+  <empty-state title="未找到墓地" description="可能已被删除，或换了一个家庭。" />
 </view>
 <view class="page" wx:else>
-  <hills-art height="140" label="{{grave.coverLabel}}" />
+  <hills-art height="150" label="{{grave.coverLabel}}" cover-path="{{grave.coverPath}}" motif="{{grave.coverMotif}}" />
   <view class="h1 mt-3">{{grave.name}}</view>
-  <view class="muted mt-2">{{grave.memorialFor}}<text wx:if="{{noteShort}}"> · {{noteShort}}</text></view>
-  <view class="action-row">
-    <button class="action" bindtap="navigate">
-      <view class="action-ico">⌖</view>
-      <text>导航</text>
-    </button>
-    <button class="action action-primary" bindtap="goVisitNew">
-      <view class="action-ico">✎</view>
-      <text>记一笔</text>
-    </button>
-    <button class="action" bindtap="goChecklist">
-      <view class="action-ico">☰</view>
-      <text>清单</text>
-    </button>
-    <button class="action" bindtap="moreActions">
-      <view class="action-ico">···</view>
-      <text>更多</text>
-    </button>
+  <view class="muted mt-2 sub">{{grave.memorialFor}} · {{noteShort}}</view>
+
+  <view class="grid-2 action-grid">
+    <button class="pill secondary" bindtap="navigate">导航</button>
+    <button class="pill primary" bindtap="goVisitNew">记一笔</button>
+    <button class="pill dashed" bindtap="goChecklist">清单</button>
+    <button class="pill dashed" bindtap="goSchedules">排程</button>
   </view>
+
   <view class="card mt-4">
-    <view style="font-weight:600;" class="mb-2">近期记录</view>
-    <view class="muted">{{recentLabel}}</view>
+    <view class="card-h">近期记录</view>
+    <view wx:if="{{recentItems.length}}" class="recent-list">
+      <view wx:for="{{recentItems}}" wx:key="id" class="recent-line" bindtap="goVisit" data-id="{{item.id}}">
+        <text class="ink">{{item.title}}</text>
+        <text class="muted">{{item.dateShort}}</text>
+      </view>
+    </view>
+    <view wx:else class="muted">{{recentLabel}}</view>
   </view>
-  <view class="card-dash mt-3">{{locLabel}}</view>
+
+  <view class="card-dash mt-3" bindtap="goEdit">{{locLabel}}</view>
+
   <view wx:if="{{schedules.length}}" class="card mt-3">
-    <view style="font-weight:600;" class="mb-2">绑定排程</view>
-    <view wx:for="{{schedules}}" wx:key="id" class="muted">{{item.type}} · {{item.date}} · {{item.assignee}}</view>
+    <view class="card-h mb-2">绑定排程</view>
+    <view wx:for="{{schedules}}" wx:key="id" class="muted sched">{{item.line}}</view>
   </view>
+
+  <button class="btn-text mt-4" bindtap="moreActions">编辑 / 新建排程</button>
 </view>

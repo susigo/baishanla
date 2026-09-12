@@ -3,6 +3,7 @@
   "enableShareAppMessage": true,
   "enableShareTimeline": true,
   "usingComponents": {
-    "hills-art": "/components/hills-art/hills-art"
+    "hills-art": "/components/hills-art/hills-art",
+    "empty-state": "/components/empty-state/empty-state"
   }
 }

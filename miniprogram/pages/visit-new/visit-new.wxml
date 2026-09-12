@@ -1,23 +1,42 @@
-<view class="page">
-  <view class="h1 mb-3">记一笔</view>
-  <picker mode="selector" range="{{graveNames}}" value="{{graveIndex}}" bindchange="onGrave">
-    <view class="field mb-3">{{graveNames[graveIndex] || '请选择墓地'}}</view>
+<view class="page compose">
+  <view class="top-bar">
+    <view class="h1">{{editing ? '编辑记录' : '记一笔'}}</view>
+    <view class="publish-link {{publishing ? 'dim' : ''}}" bindtap="publish">发布</view>
+  </view>
+
+  <view wx:if="{{emptyGraves}}" class="card-dash mb-3" bindtap="goAddGrave">
+    还没有墓地 · 先添加一座再记看望
+  </view>
+
+  <picker mode="selector" range="{{graveNames}}" value="{{graveIndex}}" bindchange="onGrave" disabled="{{emptyGraves}}">
+    <view class="field field-row mb-3">
+      <text>{{graveNames[graveIndex] || '请选择墓地'}}</text>
+      <text class="chev">▾</text>
+    </view>
   </picker>
   <picker mode="date" value="{{date}}" bindchange="onDate">
-    <view class="field mb-3">日期 · {{dateLabel}}</view>
+    <view class="field field-row mb-3">
+      <text>日期 · {{dateLabel}}</text>
+      <text class="chev">▾</text>
+    </view>
   </picker>
-  <input class="field mb-3" placeholder="标题（可选）" value="{{title}}" bindinput="onTitle" />
-  <textarea class="field field-area mb-3" placeholder="写几句想记下来的..." value="{{body}}" bindinput="onBody" />
-  <view class="muted mb-2">照片 / 视频</view>
+  <input class="field mb-3" placeholder="标题（可选）" value="{{title}}" bindinput="onTitle" maxlength="40" />
+  <textarea class="field field-area mb-3" placeholder="写几句想记下来的…天气、同行的人、路上的小事" value="{{body}}" bindinput="onBody" maxlength="2000" />
+
+  <view class="muted photo-label mb-2">照片（最多 9 张，自动压缩）</view>
   <view class="grid-3 mb-4">
     <view class="photo-add" bindtap="addPhoto">＋</view>
-    <image wx:for="{{photos}}" wx:key="*this" class="photo-slot" src="{{item}}" mode="aspectFill" />
-    <view wx:if="{{!photos.length}}" class="cover-photo photo-slot"></view>
-    <view wx:if="{{!photos.length}}" class="cover-photo photo-slot blush-tone"></view>
+    <view wx:for="{{photos}}" wx:key="*this" class="photo-slot wrap">
+      <image class="photo-img" src="{{item}}" mode="aspectFill" bindtap="previewPhoto" data-src="{{item}}" />
+      <view class="photo-x" catchtap="removePhoto" data-idx="{{index}}">×</view>
+    </view>
   </view>
-  <view class="card row mb-4" bindtap="toggleList">
+
+  <view class="card row list-toggle mb-4" bindtap="toggleList">
     <view class="check {{openList ? 'on' : ''}}"></view>
-    <view style="font-size:28rpx;">同时打开本次物资清单</view>
+    <view class="list-toggle-text">同时打开本次物资清单</view>
   </view>
-  <button class="btn-primary" bindtap="publish">发布</button>
+
+  <button class="btn-primary" loading="{{publishing}}" disabled="{{publishing || emptyGraves}}" bindtap="publish">发布</button>
+  <view class="muted tip">短视频本期不做入库；照片保存在本机会话，正式版接对象存储。</view>
 </view>

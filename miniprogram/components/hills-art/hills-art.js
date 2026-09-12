@@ -3,14 +3,21 @@ Component({
     height: { type: Number, value: 140 },
     label: { type: String, value: '' },
     variant: { type: Number, value: 0 },
+    coverPath: { type: String, value: '' },
+    motif: { type: String, value: '' },
   },
   data: {
     src: '/assets/cover-sage.png',
   },
   observers: {
-    variant(v) {
+    'variant, coverPath, motif': function (v, path, motif) {
+      if (path) {
+        this.setData({ src: path })
+        return
+      }
+      const m = motif || (Number(v) % 2 === 1 ? 'blush' : 'sage')
       this.setData({
-        src: Number(v) % 2 === 1 ? '/assets/cover-blush.png' : '/assets/cover-sage.png',
+        src: m === 'blush' ? '/assets/cover-blush.png' : '/assets/cover-sage.png',
       })
     },
   },

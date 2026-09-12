@@ -1,1 +1,54 @@
-/* inherit */
+.section-title {
+  font-size: 24rpx;
+  color: #6B776F;
+  letter-spacing: 2rpx;
+  margin-bottom: 16rpx;
+}
+.cover-wrap { position: relative; }
+.cover-hint {
+  position: absolute;
+  right: 24rpx;
+  top: 24rpx;
+  background: rgba(247, 243, 234, 0.9);
+  color: #5F9483;
+  font-size: 22rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid rgba(183, 208, 196, 0.55);
+}
+.motif-row {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+.map-card {
+  background: #fff;
+  border-radius: 32rpx;
+  overflow: hidden;
+  box-shadow: 0 16rpx 48rpx rgba(47, 58, 54, 0.06);
+  border: 2rpx solid #E5E0D4;
+}
+.map-art {
+  height: 240rpx;
+  background:
+    linear-gradient(#0000 49%, #d5d0c4 50%, #0000 51%),
+    linear-gradient(90deg, #0000 49%, #d5d0c4 50%, #0000 51%),
+    #E7EFE9;
+  background-size: 72rpx 72rpx;
+  position: relative;
+}
+.map-pin {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 32rpx;
+  height: 32rpx;
+  background: #E7B8B0;
+  border: 4rpx solid #2F3A36;
+  border-radius: 50% 50% 50% 0;
+  transform: translate(-50%, -100%) rotate(-45deg);
+}
+.loc-body { padding: 24rpx 28rpx 28rpx; }
+.loc-title { font-weight: 600; margin-bottom: 8rpx; }
+.loc-text { white-space: pre-wrap; line-height: 1.5; font-size: 24rpx; }
+.tip { font-size: 22rpx; line-height: 1.5; }

@@ -1,1 +1,9 @@
-/* inherit */
+.label { font-size: 24rpx; margin-bottom: 10rpx; letter-spacing: 1rpx; }
+.field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chev { color: #6B776F; font-size: 24rpx; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.row { justify-content: flex-start; gap: 24rpx; }

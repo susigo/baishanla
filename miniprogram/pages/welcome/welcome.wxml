@@ -1,17 +1,22 @@
 <view class="page spring welcome">
   <view class="welcome-art">
-    <hills-art height="200" />
+    <hills-art height="210" label="" />
   </view>
   <view class="hero">
     <view class="brand">拜山啦</view>
     <view class="slogan">把看望，轻轻记下来</view>
-    <view class="sprout-line">新芽</view>
+    <view class="divider">
+      <view class="divider-line"></view>
+      <text class="leaf">🌿</text>
+      <view class="divider-line"></view>
+    </view>
   </view>
   <view wx:if="{{pendingInvite}}" class="invite-chip">收到家庭邀请，登录后即可加入</view>
+  <view class="spacer"></view>
   <view class="bottom">
-    <button class="btn-wx mb-3" bindtap="mockWx">微信登录</button>
     <button class="btn-primary mb-3" bindtap="goLogin">开始</button>
     <button class="btn-secondary mb-3" bindtap="goLogin">已有账号登录</button>
+    <button class="btn-wx mb-3" bindtap="mockWx">微信登录</button>
     <button class="btn-text" bindtap="enterDemo">进入演示 · 小林家</button>
   </view>
 </view>
