@@ -25,13 +25,13 @@ Repo：https://github.com/susigo/baishanla
 `project.config.json` 里现在是占位：
 
 ```json
-"appid": "touristappid"
+"appid": "wx823b5a6710a49604（已写入 project.config.json）"
 ```
 
 | 场景 | AppID | 说明 |
 |---|---|---|
-| 仅电脑模拟器点原型 | `touristappid` 或留空后勾选「使用测试号」 | 不需要注册小程序 |
-| **手机扫码预览 / 真机调试** | 你自己的正式 AppID | `touristappid` **不能**出预览码给真机 |
+| 仅电脑模拟器点原型 | `wx823b5a6710a49604（已写入 project.config.json）` 或留空后勾选「使用测试号」 | 不需要注册小程序 |
+| **手机扫码预览 / 真机调试** | 你自己的正式 AppID | `wx823b5a6710a49604（已写入 project.config.json）` **不能**出预览码给真机 |
 | **真实订阅消息授权** | 正式 AppID + 公众平台模板 | 见下方「订阅提醒」 |
 
 Eva 要在手机上看，需要：
@@ -93,7 +93,7 @@ Eva 要在手机上看，需要：
 
 点「开启清明提醒」会调用 `wx.requestSubscribeMessage`，模板 ID 集中在 `utils/subscribe.js` 的 `TMPL_IDS`（默认 `[]`）。
 
-- `touristappid` / 未配置模板 / 调用失败：弹出说明「开发者工具 / 未配置模板时仅演示 UI；正式版配置模板 ID 后即可授权」，并在本地记下 `subscribeOptIn`，卡片变为「已预约提醒（演示）」。
+- `wx823b5a6710a49604（已写入 project.config.json）` / 未配置模板 / 调用失败：弹出说明「开发者工具 / 未配置模板时仅演示 UI；正式版配置模板 ID 后即可授权」，并在本地记下 `subscribeOptIn`，卡片变为「已预约提醒（演示）」。
 - **真机授权**：用正式 AppID，在公众平台申请订阅消息模板，把模板 ID 填进 `TMPL_IDS`，再在真机点一次授权。不要把真实 AppID / 模板 ID 提交进 git。
 
 重置演示数据会清掉订阅演示状态。
@@ -124,7 +124,7 @@ Cream `#F7F3EA` · Sage `#7BAF9E` · Blush `#E7B8B0` · Ink `#2F3A36` · Muted `
 ```
 miniprogram/
   app.js / app.json / app.wxss
-  project.config.json          # appid: touristappid
+  project.config.json          # appid: wx823b5a6710a49604（已写入 project.config.json）
   pages/                       # 欢迎、登录、家庭、四个 Tab、详情与表单
   components/                  # hills-art · empty-state · cover-thumb
   utils/store.js               # 种子数据与 CRUD
@@ -132,3 +132,6 @@ miniprogram/
   utils/subscribe.js           # TMPL_IDS 与 requestSubscribeMessage
   assets/tabs/                 # tabBar 图标
 ```
+
+
+**不要把 AppSecret 提交进仓库。**

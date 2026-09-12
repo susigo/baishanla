@@ -1,6 +1,7 @@
 {
-  "description": "本地私有配置，不要提交真实 AppID。用微信开发者工具填写自己的 AppID。",
+  "description": "本地私有覆盖。AppID 已在 project.config.json。AppSecret / 体验版密钥勿提交。",
   "projectname": "baishanla",
+  "appid": "wx823b5a6710a49604",
   "setting": {
     "compileHotReLoad": true,
     "urlCheck": false
